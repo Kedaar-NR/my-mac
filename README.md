@@ -200,6 +200,8 @@ Built with inspiration from the macOS design language and user interface pattern
 
 Note: This project is actively maintained.
 
+Happy holidays!
+
 ## License
 
 MIT License - feel free to use this project as a template for your own portfolio.
