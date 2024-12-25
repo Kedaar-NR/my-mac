@@ -206,4 +206,6 @@ Happy holidays!
 
 MIT License - feel free to use this project as a template for your own portfolio.
 
+Built with ❤️
+
 <!-- Minor update -->
