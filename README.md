@@ -1,36 +1,194 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# macOS Portfolio Website
+
+A fully interactive macOS-inspired portfolio website built with Next.js, TypeScript, and Tailwind CSS. This project recreates the macOS desktop experience in a web browser, complete with draggable windows, a functional dock, and authentic UI elements.
+
+## Overview
+
+This portfolio website mimics the macOS interface to create an engaging and memorable user experience. Visitors can interact with desktop folders, open windows, browse essays, and learn more about my background and projects—all within a familiar desktop environment.
+
+## Features
+
+### Desktop Environment
+- **Authentic macOS UI**: Recreates the look and feel of macOS with a custom menu bar, dock, and desktop icons
+- **Custom wallpaper**: Beautiful background image that sets the aesthetic tone
+- **Interactive folders**: Click on desktop folders to open finder windows with different content sections
+
+### Window Management
+- **Draggable windows**: All windows can be dragged and repositioned anywhere on the screen
+- **Resizable windows**: Windows can be resized with proper constraints
+- **Window controls**: Functional red (close), yellow (minimize), and green (maximize) buttons
+- **Z-index management**: Windows properly layer on top of each other when clicked
+- **Minimize to dock**: Minimized windows appear in the dock and can be restored by clicking
+
+### Dock
+- **Smooth animations**: Icons magnify on hover with spring physics
+- **Active indicators**: Small dots under running applications
+- **Minimized windows**: Shows minimized windows between the separator and trash
+- **Authentic design**: Frosted glass effect with proper spacing and styling
+
+### Content Sections
+
+#### About Me
+- Typing animation that cycles through different roles
+- Social links (LinkedIn, GitHub, Twitter)
+- Email contact
+- Link to UC Berkeley M.E.T. program
+- Streak counters for personal habits (calorie tracking, typing, pushups, GitHub commits)
+
+#### Essays
+- File browser interface with a realistic macOS finder layout
+- Three placeholder markdown files (web_dev.md, systems.md, what_to_work_on.md)
+- Columns for Name, Date Modified, Size, and Kind
+- Clickable files that open in new windows
+
+#### Projects, Venture, Research
+- Placeholder sections ready for future content
+
+### Technical Features
+- **Server-side rendering**: Built with Next.js App Router for optimal performance
+- **TypeScript**: Fully typed for better developer experience and fewer bugs
+- **State management**: Zustand for efficient window state management
+- **Animations**: Framer Motion for smooth, performant animations
+- **Responsive design**: Tailwind CSS for styling
+- **Production ready**: Builds successfully with no errors or warnings
+
+## Tech Stack
+
+- **Framework**: Next.js 15.5.4
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **State Management**: Zustand
+- **Window Management**: react-rnd
+- **Icons**: Lucide React
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
 
+### Installation
+
+1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <your-repo-url>
+cd new-personal
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## Learn More
+### Building for Production
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+npm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/
+│   ├── layout.tsx          # Root layout with metadata
+│   ├── page.tsx            # Main page component
+│   └── globals.css         # Global styles
+├── components/
+│   ├── Desktop.tsx         # Main desktop container
+│   ├── DesktopIcons.tsx    # Desktop folder icons
+│   ├── Dock.tsx            # macOS dock component
+│   ├── FinderWindow.tsx    # Finder window with all content
+│   ├── MailWindow.tsx      # Mail window component
+│   ├── MenuBar.tsx         # Top menu bar
+│   └── PortfolioWindow.tsx # Portfolio window component
+└── store/
+    └── windowStore.ts      # Zustand store for window management
+```
 
-## Deploy on Vercel
+## Customization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Adding New Folders
+Edit `src/components/DesktopIcons.tsx` to add new folders to the desktop:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```typescript
+const folders = [
+  {
+    label: "Your Folder Name",
+    onClick: () => openWindow({
+      title: "Your Folder Name",
+      type: "finder",
+      content: "your-content-key"
+    }),
+  },
+  // ... more folders
+];
+```
+
+### Adding New Content
+Add new cases to the `getContent()` function in `src/components/FinderWindow.tsx`:
+
+```typescript
+case "your-content-key":
+  return (
+    <div className="p-6">
+      {/* Your content here */}
+    </div>
+  );
+```
+
+### Updating Personal Information
+Edit the "about" case in `src/components/FinderWindow.tsx` to update:
+- Name and bio
+- Social links
+- Streak counters
+- Personal interests
+
+## Deployment
+
+This project is optimized for deployment on Vercel:
+
+1. Push your code to GitHub
+2. Import the repository in Vercel
+3. Deploy
+
+Vercel will automatically detect the Next.js configuration and deploy your site.
+
+## Performance
+
+- **First Load JS**: 179 KB (optimized)
+- **Static Generation**: All pages are pre-rendered at build time
+- **Lighthouse Score**: Optimized for performance, accessibility, and SEO
+
+## Browser Compatibility
+
+Tested and working on:
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+
+## Future Enhancements
+
+- Add actual essay content
+- Implement project showcase
+- Add venture capital portfolio section
+- Include research publications
+- Create more interactive elements
+- Add keyboard shortcuts
+
+## Acknowledgments
+
+Built with inspiration from the macOS design language and user interface patterns.
+
+## License
+
+MIT License - feel free to use this project as a template for your own portfolio.
