@@ -38,6 +38,29 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
     nextZIndex: 1,
 
     openWindow: (windowData) => {
+        const state = get();
+        // Prevent duplicates: match by type + (content OR title)
+        const existing = state.windows.find(w =>
+            w.type === windowData.type && (
+                (windowData.content && w.content === windowData.content) ||
+                w.title === windowData.title
+            )
+        );
+
+        if (existing) {
+            // Restore if minimized and bring to front
+            set((s) => ({
+                windows: s.windows.map((w) =>
+                    w.id === existing.id
+                        ? { ...w, isMinimized: false, isOpen: true, zIndex: s.nextZIndex }
+                        : w
+                ),
+                activeWindowId: existing.id,
+                nextZIndex: s.nextZIndex + 1,
+            }));
+            return;
+        }
+
         const isAboutMe = windowData.content === 'about';
         const isMarkdown = windowData.content === 'markdown-placeholder';
         const newWindow: Window = {
@@ -46,17 +69,17 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
             isOpen: true,
             isMinimized: false,
             isMaximized: false,
-            x: isMarkdown ? 450 + (get().windows.length * 30) : 400 + (get().windows.length * 30),
-            y: isMarkdown ? 120 + (get().windows.length * 30) : 80 + (get().windows.length * 30),
+            x: isMarkdown ? 450 + (state.windows.length * 30) : 400 + (state.windows.length * 30),
+            y: isMarkdown ? 120 + (state.windows.length * 30) : 80 + (state.windows.length * 30),
             width: windowData.type === 'finder' ? 900 : 600,
             height: windowData.type === 'finder' ? (isAboutMe ? 1150 : 700) : 500,
-            zIndex: get().nextZIndex,
+            zIndex: state.nextZIndex,
         }
 
-        set((state) => ({
-            windows: [...state.windows, newWindow],
+        set((s) => ({
+            windows: [...s.windows, newWindow],
             activeWindowId: newWindow.id,
-            nextZIndex: state.nextZIndex + 1,
+            nextZIndex: s.nextZIndex + 1,
         }))
     },
 
