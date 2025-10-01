@@ -1,0 +1,213 @@
+"use client";
+
+import { useState } from "react";
+import { Rnd } from "react-rnd";
+import { motion } from "framer-motion";
+import {
+  Send,
+  Paperclip,
+  Bold,
+  Italic,
+  Underline,
+  Link,
+  Smile,
+} from "lucide-react";
+import { useWindowStore } from "@/store/windowStore";
+import { Window } from "@/store/windowStore";
+
+interface MailWindowProps {
+  window: Window;
+}
+
+export default function MailWindow({ window }: MailWindowProps) {
+  const {
+    closeWindow,
+    minimizeWindow,
+    maximizeWindow,
+    setActiveWindow,
+    updateWindowPosition,
+    updateWindowSize,
+  } = useWindowStore();
+  const [formData, setFormData] = useState({
+    to: "",
+    subject: "",
+    message: "",
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleDragStop = (e: any, d: { x: number; y: number }) => {
+    updateWindowPosition(window.id, d.x, d.y);
+  };
+
+  const handleResizeStop = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    e: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    direction: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ref: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    delta: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    position: any
+  ) => {
+    updateWindowSize(
+      window.id,
+      parseInt(ref.style.width),
+      parseInt(ref.style.height)
+    );
+    updateWindowPosition(window.id, position.x, position.y);
+  };
+
+  const handleWindowClick = () => {
+    setActiveWindow(window.id);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission
+    console.log("Form submitted:", formData);
+    alert("Message sent! (This is a demo)");
+  };
+
+  return (
+    <Rnd
+      size={{ width: window.width, height: window.height }}
+      position={{ x: window.x, y: window.y }}
+      onDragStop={handleDragStop}
+      onResizeStop={handleResizeStop}
+      onClick={handleWindowClick}
+      className="absolute"
+      style={{ zIndex: window.zIndex }}
+      bounds="parent"
+      minWidth={500}
+      minHeight={400}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.9 }}
+        className="w-full h-full bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden"
+      >
+        {/* Title Bar */}
+        <div className="h-8 bg-gray-100 border-b border-gray-200 flex items-center justify-between px-4">
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => closeWindow(window.id)}
+              className="w-3 h-3 bg-red-500 rounded-full hover:bg-red-600 transition-colors"
+            />
+            <button
+              onClick={() => minimizeWindow(window.id)}
+              className="w-3 h-3 bg-yellow-500 rounded-full hover:bg-yellow-600 transition-colors"
+            />
+            <button
+              onClick={() => maximizeWindow(window.id)}
+              className="w-3 h-3 bg-green-500 rounded-full hover:bg-green-600 transition-colors"
+            />
+          </div>
+          <div className="text-sm font-medium text-gray-700">
+            {window.title}
+          </div>
+          <div className="w-16" /> {/* Spacer for centering */}
+        </div>
+
+        {/* Toolbar */}
+        <div className="h-12 bg-gray-50 border-b border-gray-200 flex items-center justify-between px-4">
+          <div className="flex items-center space-x-2">
+            <button className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+              <Send size={16} />
+            </button>
+            <button className="p-2 hover:bg-gray-200 rounded-lg">
+              <Paperclip size={16} />
+            </button>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <button className="p-1 hover:bg-gray-200 rounded">
+              <Bold size={16} />
+            </button>
+            <button className="p-1 hover:bg-gray-200 rounded">
+              <Italic size={16} />
+            </button>
+            <button className="p-1 hover:bg-gray-200 rounded">
+              <Underline size={16} />
+            </button>
+            <button className="p-1 hover:bg-gray-200 rounded">
+              <Link size={16} />
+            </button>
+            <button className="p-1 hover:bg-gray-200 rounded">
+              <Smile size={16} />
+            </button>
+          </div>
+        </div>
+
+        {/* Content Area */}
+        <div className="flex-1 p-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                To:
+              </label>
+              <input
+                type="email"
+                value={formData.to}
+                onChange={(e) =>
+                  setFormData({ ...formData, to: e.target.value })
+                }
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter email address"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Subject:
+              </label>
+              <input
+                type="text"
+                value={formData.subject}
+                onChange={(e) =>
+                  setFormData({ ...formData, subject: e.target.value })
+                }
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter subject"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Message:
+              </label>
+              <textarea
+                value={formData.message}
+                onChange={(e) =>
+                  setFormData({ ...formData, message: e.target.value })
+                }
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-32 resize-none"
+                placeholder="Enter your message"
+                required
+              />
+            </div>
+
+            <div className="flex justify-end space-x-3">
+              <button
+                type="button"
+                className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+              >
+                Send Message
+              </button>
+            </div>
+          </form>
+        </div>
+      </motion.div>
+    </Rnd>
+  );
+}
