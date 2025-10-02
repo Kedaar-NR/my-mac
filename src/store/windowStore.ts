@@ -38,16 +38,18 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
     nextZIndex: 1,
 
     openWindow: (windowData) => {
+        const isAboutMe = windowData.content === 'about';
+        const isMarkdown = windowData.content === 'markdown-placeholder';
         const newWindow: Window = {
             ...windowData,
             id: `${windowData.type}-${Date.now()}`,
             isOpen: true,
             isMinimized: false,
             isMaximized: false,
-            x: 100 + (get().windows.length * 30),
-            y: 100 + (get().windows.length * 30),
-            width: windowData.type === 'finder' ? 800 : 600,
-            height: windowData.type === 'finder' ? 600 : 500,
+            x: isMarkdown ? 450 + (get().windows.length * 30) : 400 + (get().windows.length * 30),
+            y: isMarkdown ? 120 + (get().windows.length * 30) : 80 + (get().windows.length * 30),
+            width: windowData.type === 'finder' ? 900 : 600,
+            height: windowData.type === 'finder' ? (isAboutMe ? 1150 : 700) : 500,
             zIndex: get().nextZIndex,
         }
 
