@@ -27,7 +27,7 @@ export default function Desktop() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('/images/wave-background.jpg')`,
+          backgroundImage: `url('/images/wallpaper.jpg')`,
           backgroundAttachment: "fixed",
         }}
       />
@@ -46,17 +46,16 @@ export default function Desktop() {
         if (!window.isOpen || window.isMinimized) return null;
 
         const commonProps = {
-          key: window.id,
           window,
         };
 
         switch (window.type) {
           case "finder":
-            return <FinderWindow {...commonProps} />;
+            return <FinderWindow key={window.id} {...commonProps} />;
           case "mail":
-            return <MailWindow {...commonProps} />;
+            return <MailWindow key={window.id} {...commonProps} />;
           case "portfolio":
-            return <PortfolioWindow {...commonProps} />;
+            return <PortfolioWindow key={window.id} {...commonProps} />;
           default:
             return null;
         }
