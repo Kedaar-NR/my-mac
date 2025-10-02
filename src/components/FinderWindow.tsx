@@ -92,7 +92,6 @@ export default function FinderWindow({ window }: FinderWindowProps) {
     setActiveWindow,
     updateWindowPosition,
     updateWindowSize,
-    openWindow,
     openOrFocusTab,
     closeTab,
     setActiveTab,
