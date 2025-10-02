@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Rnd } from "react-rnd";
 import { motion } from "framer-motion";
 import {
@@ -103,13 +103,16 @@ export default function FinderWindow({ window }: FinderWindowProps) {
   // Optional GitHub token to avoid rate limits (set NEXT_PUBLIC_GITHUB_TOKEN)
   const githubToken =
     typeof process !== "undefined"
-      ? (process as any).env?.NEXT_PUBLIC_GITHUB_TOKEN
+      ? (process as unknown as { env?: Record<string, string | undefined> }).env?.NEXT_PUBLIC_GITHUB_TOKEN
       : undefined;
-  const ghHeaders: HeadersInit = {
-    Accept: "application/vnd.github+json",
-    "X-GitHub-Api-Version": "2022-11-28",
-    ...(githubToken ? { Authorization: `Bearer ${githubToken}` } : {}),
-  };
+  const ghHeaders = useMemo<HeadersInit>(
+    () => ({
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+      ...(githubToken ? { Authorization: `Bearer ${githubToken}` } : {}),
+    }),
+    [githubToken]
+  );
 
   useEffect(() => {
     if (window.content === "projects") {
@@ -133,9 +136,9 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                 const resp = await fetch(repo.languages_url, {
                   headers: ghHeaders,
                 });
-                const obj = await resp.json();
-                const top = Object.entries(obj)
-                  .sort((a: any, b: any) => (b[1] as number) - (a[1] as number))
+                const obj = (await resp.json()) as Record<string, number>;
+                const top = Object.entries(obj as Record<string, number>)
+                  .sort((a, b) => b[1] - a[1])
                   .slice(0, 3)
                   .map(([name]) => String(name));
                 return { ...repo, _languages: top } as GitHubRepo;
@@ -155,7 +158,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
           setRepos([]);
         });
     }
-  }, [window.content, reloadKey]);
+  }, [window.content, reloadKey, ghHeaders]);
 
   // Ensure Projects window opens taller
   useEffect(() => {
@@ -165,7 +168,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
         updateWindowSize(window.id, window.width, desiredHeight);
       }
     }
-  }, [window.content]);
+  }, [window.content, window.height, window.id, window.width, updateWindowSize]);
 
   const handleDragStop = (_e: unknown, d: { x: number; y: number }) => {
     updateWindowPosition(window.id, d.x, d.y);
@@ -364,27 +367,6 @@ export default function FinderWindow({ window }: FinderWindowProps) {
       return "📁";
     };
 
-    function chooseFallbackLanguages(name: string): string[] {
-      const lower = name.toLowerCase();
-      if (
-        lower.includes("ml") ||
-        lower.includes("ai") ||
-        lower.includes("bot") ||
-        lower.includes("rank")
-      ) {
-        return ["Python"];
-      }
-      if (
-        lower.includes("mac") ||
-        lower.includes("civic") ||
-        lower.includes("query") ||
-        lower.includes("hacks") ||
-        lower.includes("week")
-      ) {
-        return ["TypeScript"];
-      }
-      return ["TypeScript", "Python"];
-    }
 
     if (viewMode === "list") {
       // Special list layout for Projects: Name | Date Modified | Languages
