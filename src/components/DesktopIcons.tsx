@@ -20,8 +20,9 @@ function DesktopIcon({ label, onClick }: DesktopIconProps) {
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
       className="flex flex-col items-center space-y-1 p-1.5 group pointer-events-auto select-none"
+      aria-label={label}
     >
-      <div className="relative w-20 h-20 flex items-center justify-center">
+      <div className="relative w-20 h-20 flex items-center justify-center" aria-hidden="true">
         {isTextFile ? (
           <svg
             width="80"
