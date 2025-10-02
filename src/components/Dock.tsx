@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useWindowStore } from "@/store/windowStore";
 
 interface DockIconProps {
   iconSrc?: string;
@@ -10,22 +11,33 @@ interface DockIconProps {
   isActive?: boolean;
   isSeparator?: boolean;
   isFolder?: boolean;
+  isMinimizedWindow?: boolean;
+  windowId?: string;
 }
 
-function DockIcon({ iconSrc, label, onClick, isActive = false, isSeparator = false, isFolder = false }: DockIconProps) {
+function DockIcon({ iconSrc, label, onClick, isActive = false, isSeparator = false, isFolder = false, isMinimizedWindow = false, windowId }: DockIconProps) {
+  const { restoreWindow } = useWindowStore();
+
   if (isSeparator) {
     return (
       <div className="w-0.5 h-16 bg-white/30 mx-2 rounded-full" />
     );
   }
 
+  const handleClick = () => {
+    if (isMinimizedWindow && windowId) {
+      restoreWindow(windowId);
+    } else if (onClick) {
+      onClick();
+    }
+  };
+
   return (
-    <motion.button
-      whileHover={{ scale: 1.3, y: -12 }}
-      whileTap={{ scale: 0.95 }}
-      transition={{ type: "spring", stiffness: 400, damping: 17 }}
-      onClick={onClick}
-      className="relative group flex flex-col items-center"
+    <motion.div
+      whileHover={{ scale: 1.15, y: -8 }}
+      transition={{ type: "spring", stiffness: 500, damping: 25 }}
+      onClick={handleClick}
+      className={`relative group flex flex-col items-center ${isMinimizedWindow ? 'cursor-pointer' : 'cursor-default'}`}
       title={label}
     >
       {isFolder ? (
@@ -63,11 +75,13 @@ function DockIcon({ iconSrc, label, onClick, isActive = false, isSeparator = fal
       {isActive && (
         <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white/80 rounded-full shadow-lg" />
       )}
-    </motion.button>
+    </motion.div>
   );
 }
 
 export default function Dock() {
+  const { windows } = useWindowStore();
+
   const dockApps = [
     {
       iconSrc: "/images/finder.jpeg",
@@ -80,8 +94,13 @@ export default function Dock() {
       isActive: true,
     },
     {
-      iconSrc: "/images/music.jpeg",
+      iconSrc: "/images/spotify.jpeg",
       label: "Spotify",
+      isActive: true,
+    },
+    {
+      iconSrc: "/images/music.jpeg",
+      label: "Messages",
       isActive: true,
     },
     {
@@ -89,16 +108,9 @@ export default function Dock() {
       label: "Launchpad",
       isActive: true,
     },
-    {
-      label: "separator",
-      isSeparator: true,
-    },
-    {
-      iconSrc: "/images/trash.jpeg",
-      label: "Trash",
-      isActive: false,
-    },
   ];
+
+  const minimizedWindows = windows.filter(w => w.isMinimized && w.isOpen);
 
   return (
     <motion.div
@@ -112,6 +124,22 @@ export default function Dock() {
           {dockApps.map((app, index) => (
             <DockIcon key={index} {...app} />
           ))}
+          <div className="w-0.5 h-16 bg-white/30 mx-2 rounded-full" />
+          {minimizedWindows.map((window) => (
+            <DockIcon
+              key={window.id}
+              label={window.title}
+              isActive={true}
+              isMinimizedWindow={true}
+              windowId={window.id}
+              isFolder={true}
+            />
+          ))}
+          <DockIcon
+            iconSrc="/images/trash.jpeg"
+            label="Trash"
+            isActive={false}
+          />
         </div>
       </div>
     </motion.div>
