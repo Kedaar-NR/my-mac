@@ -53,6 +53,7 @@ export default function Desktop() {
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        aria-hidden="true"
         style={{
           backgroundImage: `url('/images/wallpaper.jpg')`,
           backgroundAttachment: "fixed",
