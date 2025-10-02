@@ -48,6 +48,8 @@ function DockIcon({
         isMinimizedWindow ? "cursor-pointer" : "cursor-default"
       }`}
       title={label}
+      aria-label={label}
+      role="button"
     >
       {isFolder ? (
         <div className="w-16 h-16 flex items-center justify-center relative">
@@ -118,6 +120,7 @@ function DockIcon({
             alt={label}
             width={64}
             height={64}
+            loading="lazy"
             className="w-full h-full object-cover"
           />
         </div>
