@@ -168,6 +168,7 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
     openOrFocusTab: (windowId, title, content) => {
         set((state) => {
             const win = state.windows.find(w => w.id === windowId);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             if (!win) return {} as any;
             const tabs = win.tabs ?? [];
             // Ensure a Home tab exists as the first tab (based on the window's root content)
@@ -196,6 +197,7 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
     closeTab: (windowId, tabId) => {
         set((state) => {
             const win = state.windows.find(w => w.id === windowId);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             if (!win) return {} as any;
             const allTabs = win.tabs ?? [];
             const remaining = allTabs.filter(t => t.id !== tabId);
