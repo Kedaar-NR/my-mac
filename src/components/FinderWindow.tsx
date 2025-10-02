@@ -93,6 +93,9 @@ export default function FinderWindow({ window }: FinderWindowProps) {
     updateWindowPosition,
     updateWindowSize,
     openWindow,
+    openOrFocusTab,
+    closeTab,
+    setActiveTab,
   } = useWindowStore();
 
   const [viewMode, setViewMode] = useState<"grid" | "list" | "columns">("list");
@@ -103,7 +106,8 @@ export default function FinderWindow({ window }: FinderWindowProps) {
   // Optional GitHub token to avoid rate limits (set NEXT_PUBLIC_GITHUB_TOKEN)
   const githubToken =
     typeof process !== "undefined"
-      ? (process as unknown as { env?: Record<string, string | undefined> }).env?.NEXT_PUBLIC_GITHUB_TOKEN
+      ? (process as unknown as { env?: Record<string, string | undefined> }).env
+          ?.NEXT_PUBLIC_GITHUB_TOKEN
       : undefined;
   const ghHeaders = useMemo<HeadersInit>(
     () => ({
@@ -160,6 +164,8 @@ export default function FinderWindow({ window }: FinderWindowProps) {
     }
   }, [window.content, reloadKey, ghHeaders]);
 
+  // Tabs are created only when clicking items; no auto-creation on load
+
   // Ensure Projects window opens taller
   useEffect(() => {
     if (window.content === "projects") {
@@ -168,7 +174,13 @@ export default function FinderWindow({ window }: FinderWindowProps) {
         updateWindowSize(window.id, window.width, desiredHeight);
       }
     }
-  }, [window.content, window.height, window.id, window.width, updateWindowSize]);
+  }, [
+    window.content,
+    window.height,
+    window.id,
+    window.width,
+    updateWindowSize,
+  ]);
 
   const handleDragStop = (_e: unknown, d: { x: number; y: number }) => {
     updateWindowPosition(window.id, d.x, d.y);
@@ -315,20 +327,8 @@ export default function FinderWindow({ window }: FinderWindowProps) {
           globalThis.window.open(it.key, "_blank", "noopener,noreferrer");
         }
       } else {
-        // Otherwise open a new finder window
-        openWindow({
-          title: it.name,
-          type: "finder",
-          content: it.key,
-        });
-        // Bring the newest window to front
-        setTimeout(() => {
-          const windows = useWindowStore.getState().windows;
-          const newest = windows[windows.length - 1];
-          if (newest) {
-            useWindowStore.getState().setActiveWindow(newest.id);
-          }
-        }, 10);
+        // Open or focus a tab within this window
+        openOrFocusTab(window.id, it.name, it.key);
       }
     };
 
@@ -366,7 +366,6 @@ export default function FinderWindow({ window }: FinderWindowProps) {
       if (lower.includes("cal") || lower.includes("hacks")) return "🧩";
       return "📁";
     };
-
 
     if (viewMode === "list") {
       // Special list layout for Projects: Name | Date Modified | Languages
@@ -558,8 +557,17 @@ export default function FinderWindow({ window }: FinderWindowProps) {
     );
   };
 
+  const activeContent = (() => {
+    if (window.type === "finder" && window.tabs && window.activeTabId) {
+      const t = window.tabs.find((t) => t.id === window.activeTabId);
+      if (t) return t.content;
+    }
+    return window.content;
+  })();
+
   const getContent = () => {
-    switch (window.content) {
+    const contentKey = activeContent;
+    switch (contentKey) {
       case "about":
         return (
           <div className="p-8 bg-white text-black font-mono min-h-full overflow-auto">
@@ -1065,10 +1073,14 @@ export default function FinderWindow({ window }: FinderWindowProps) {
         return (
           <div className="p-6">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
-              {window.title}
+              {(window.tabs ?? []).find((t) => t.id === window.activeTabId)
+                ?.title || window.title}
             </h2>
             <p className="text-gray-600">
-              Content for {window.title} will be displayed here.
+              Content for{" "}
+              {(window.tabs ?? []).find((t) => t.id === window.activeTabId)
+                ?.title || window.title}{" "}
+              will be displayed here.
             </p>
           </div>
         );
@@ -1115,6 +1127,38 @@ export default function FinderWindow({ window }: FinderWindowProps) {
           </div>
           <div className="w-16" /> {/* Spacer for centering */}
         </div>
+
+        {/* Tab Bar */}
+        {window.type === "finder" && (window.tabs ?? []).length > 0 && (
+          <div className="h-9 bg-gray-50 border-b border-gray-200 flex items-center px-2 overflow-x-auto">
+            <div className="flex items-center gap-1">
+              {(window.tabs ?? []).map((t) => (
+                <div
+                  key={t.id}
+                  className={`flex items-center max-w-xs pl-3 pr-2 h-7 rounded-md border text-xs cursor-pointer select-none ${
+                    window.activeTabId === t.id
+                      ? "bg-white border-gray-300 shadow-sm"
+                      : "bg-gray-100 border-gray-200 hover:bg-gray-200"
+                  }`}
+                  onClick={() => setActiveTab(window.id, t.id)}
+                  title={t.title}
+                >
+                  <span className="truncate mr-2">{t.title}</span>
+                  <button
+                    className="w-4 h-4 flex items-center justify-center rounded hover:bg-gray-300/60"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      closeTab(window.id, t.id);
+                    }}
+                    aria-label="Close Tab"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Toolbar */}
         <div className="h-12 bg-gray-50 border-b border-gray-200 flex items-center justify-between px-4">
