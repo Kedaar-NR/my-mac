@@ -99,6 +99,11 @@ export default function Dock() {
       isActive: true,
     },
     {
+      iconSrc: "/images/apple-music.jpeg",
+      label: "Apple Music",
+      isActive: true,
+    },
+    {
       iconSrc: "/images/music.jpeg",
       label: "Messages",
       isActive: true,
