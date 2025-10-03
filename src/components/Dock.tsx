@@ -15,13 +15,20 @@ interface DockIconProps {
   windowId?: string;
 }
 
-function DockIcon({ iconSrc, label, onClick, isActive = false, isSeparator = false, isFolder = false, isMinimizedWindow = false, windowId }: DockIconProps) {
+function DockIcon({
+  iconSrc,
+  label,
+  onClick,
+  isActive = false,
+  isSeparator = false,
+  isFolder = false,
+  isMinimizedWindow = false,
+  windowId,
+}: DockIconProps) {
   const { restoreWindow } = useWindowStore();
 
   if (isSeparator) {
-    return (
-      <div className="w-0.5 h-16 bg-white/30 mx-2 rounded-full" />
-    );
+    return <div className="w-0.5 h-16 bg-white/30 mx-2 rounded-full" />;
   }
 
   const handleClick = () => {
@@ -37,28 +44,71 @@ function DockIcon({ iconSrc, label, onClick, isActive = false, isSeparator = fal
       whileHover={{ scale: 1.15, y: -8 }}
       transition={{ type: "spring", stiffness: 500, damping: 25 }}
       onClick={handleClick}
-      className={`relative group flex flex-col items-center ${isMinimizedWindow ? 'cursor-pointer' : 'cursor-default'}`}
+      className={`relative group flex flex-col items-center ${
+        isMinimizedWindow ? "cursor-pointer" : "cursor-default"
+      }`}
       title={label}
     >
       {isFolder ? (
         <div className="w-16 h-16 flex items-center justify-center relative">
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 64 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <defs>
-              <linearGradient id={`folderGradient1-${label}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style={{ stopColor: "#6DB3E8", stopOpacity: 1 }} />
-                <stop offset="100%" style={{ stopColor: "#4A9CD9", stopOpacity: 1 }} />
+              <linearGradient
+                id={`folderGradient1-${label}`}
+                x1="0%"
+                y1="0%"
+                x2="0%"
+                y2="100%"
+              >
+                <stop
+                  offset="0%"
+                  style={{ stopColor: "#6DB3E8", stopOpacity: 1 }}
+                />
+                <stop
+                  offset="100%"
+                  style={{ stopColor: "#4A9CD9", stopOpacity: 1 }}
+                />
               </linearGradient>
-              <linearGradient id={`folderGradient2-${label}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style={{ stopColor: "#5BA5DC", stopOpacity: 1 }} />
-                <stop offset="100%" style={{ stopColor: "#3890CC", stopOpacity: 1 }} />
+              <linearGradient
+                id={`folderGradient2-${label}`}
+                x1="0%"
+                y1="0%"
+                x2="0%"
+                y2="100%"
+              >
+                <stop
+                  offset="0%"
+                  style={{ stopColor: "#5BA5DC", stopOpacity: 1 }}
+                />
+                <stop
+                  offset="100%"
+                  style={{ stopColor: "#3890CC", stopOpacity: 1 }}
+                />
               </linearGradient>
             </defs>
             {/* Back folder */}
-            <path d="M6 16 C6 14 7 13 9 13 L20 13 L23 16 L54 16 C56 16 57 17 57 19 L57 38 C57 40 56 41 54 41 L9 41 C7 41 6 40 6 38 Z" fill={`url(#folderGradient1-${label})`} opacity="0.5" />
+            <path
+              d="M6 16 C6 14 7 13 9 13 L20 13 L23 16 L54 16 C56 16 57 17 57 19 L57 38 C57 40 56 41 54 41 L9 41 C7 41 6 40 6 38 Z"
+              fill={`url(#folderGradient1-${label})`}
+              opacity="0.5"
+            />
             {/* Front folder */}
-            <path d="M4 22 C4 20 5 19 7 19 L18 19 L21 22 L56 22 C58 22 59 23 59 25 L59 50 C59 52 58 53 56 53 L7 53 C5 53 4 52 4 50 Z" fill={`url(#folderGradient2-${label})`} />
+            <path
+              d="M4 22 C4 20 5 19 7 19 L18 19 L21 22 L56 22 C58 22 59 23 59 25 L59 50 C59 52 58 53 56 53 L7 53 C5 53 4 52 4 50 Z"
+              fill={`url(#folderGradient2-${label})`}
+            />
             {/* Folder tab highlight */}
-            <path d="M18 19 L21 22 L7 22 C5 22 4 21 4 19 L4 19 C4 19 5 19 7 19 Z" fill="#7FC4EF" opacity="0.6" />
+            <path
+              d="M18 19 L21 22 L7 22 C5 22 4 21 4 19 L4 19 C4 19 5 19 7 19 Z"
+              fill="#7FC4EF"
+              opacity="0.6"
+            />
           </svg>
         </div>
       ) : iconSrc ? (
@@ -107,6 +157,12 @@ export default function Dock() {
       iconSrc: "/images/music.jpeg",
       label: "Messages",
       isActive: true,
+      onClick: () => {
+        if (typeof window !== "undefined") {
+          // Attempt to open iMessage with prefilled number
+          window.location.href = "sms:6506607341";
+        }
+      },
     },
     {
       iconSrc: "/images/launchpad.jpeg",
@@ -115,7 +171,7 @@ export default function Dock() {
     },
   ];
 
-  const minimizedWindows = windows.filter(w => w.isMinimized && w.isOpen);
+  const minimizedWindows = windows.filter((w) => w.isMinimized && w.isOpen);
 
   return (
     <motion.div
