@@ -11,7 +11,7 @@ interface DesktopIconProps {
 }
 
 function DesktopIcon({ label, onClick }: DesktopIconProps) {
-  const isTextFile = label.endsWith('.md') || label.endsWith('.txt');
+  const isTextFile = label.endsWith(".md") || label.endsWith(".txt");
 
   return (
     <motion.button
@@ -19,9 +19,9 @@ function DesktopIcon({ label, onClick }: DesktopIconProps) {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      className="flex flex-col items-center space-y-1 p-2 group pointer-events-auto"
+      className="flex flex-col items-center space-y-1 p-1.5 group pointer-events-auto select-none"
     >
-      <div className="w-20 h-20 flex items-center justify-center">
+      <div className="relative w-20 h-20 flex items-center justify-center">
         {isTextFile ? (
           <svg
             width="80"
@@ -31,15 +31,9 @@ function DesktopIcon({ label, onClick }: DesktopIconProps) {
             xmlns="http://www.w3.org/2000/svg"
           >
             {/* Text file page - white with slight shadow */}
-            <path
-              d="M14 6 L42 6 L52 16 L52 58 L14 58 Z"
-              fill="#FFFFFF"
-            />
+            <path d="M14 6 L42 6 L52 16 L52 58 L14 58 Z" fill="#FFFFFF" />
             {/* Folded corner background */}
-            <path
-              d="M42 6 L42 16 L52 16 Z"
-              fill="#E0E0E0"
-            />
+            <path d="M42 6 L42 16 L52 16 Z" fill="#E0E0E0" />
             {/* Page outline */}
             <path
               d="M14 6 L42 6 L52 16 L52 58 L14 58 Z M42 6 L42 16 L52 16"
@@ -99,8 +93,9 @@ function DesktopIcon({ label, onClick }: DesktopIconProps) {
             />
           </svg>
         )}
+        {/* Removed overlay glyphs per request */}
       </div>
-      <span className="text-white text-sm font-bold text-center max-w-32 leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] -mt-1">
+      <span className="text-white text-sm font-bold text-center w-24 leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] -mt-1">
         {label}
       </span>
     </motion.button>
@@ -110,55 +105,55 @@ function DesktopIcon({ label, onClick }: DesktopIconProps) {
 export default function DesktopIcons() {
   const { openWindow } = useWindowStore();
 
-  const folders = [
-    {
-      label: "about_me.txt",
-      onClick: () =>
-        openWindow({ title: "about_me.txt", type: "finder", content: "about" }),
-    },
-    {
-      label: "Entrepreneurship",
-      onClick: () =>
-        openWindow({
-          title: "Entrepreneurship",
-          type: "finder",
-          content: "entrepreneurship",
-        }),
-    },
-    {
-      label: "Projects",
-      onClick: () =>
-        openWindow({ title: "Projects", type: "finder", content: "projects" }),
-    },
-    {
-      label: "Essays",
-      onClick: () =>
-        openWindow({ title: "Essays", type: "finder", content: "essays" }),
-    },
-    {
-      label: "Venture",
-      onClick: () =>
-        openWindow({ title: "Venture", type: "finder", content: "venture" }),
-    },
-    {
-      label: "Research",
-      onClick: () =>
-        openWindow({ title: "Research", type: "finder", content: "research" }),
-    },
-  ];
+  const open = (title: string, content: string) =>
+    openWindow({ title, type: "finder", content });
 
   return (
     <div className="absolute inset-0 pointer-events-none">
-      <div className="absolute left-[8%] top-1/2 -translate-y-1/2 flex flex-col items-center gap-8">
-        {folders.map((folder, index) => (
-          <DesktopIcon
-            key={`folder-${index}`}
-            icon={<div />}
-            label={folder.label}
-            onClick={folder.onClick}
-            position={{ x: 0, y: 0 }}
-          />
-        ))}
+      {/* Single column order per request */}
+      <div className="absolute left-[8%] top-[45%] -translate-y-1/2 flex flex-col items-center gap-6">
+        <DesktopIcon
+          label="about_me.txt"
+          onClick={() => open("about_me.txt", "about")}
+          icon={<div />}
+          position={{ x: 0, y: 0 }}
+        />
+        <DesktopIcon
+          label="Entrepreneurship"
+          onClick={() => open("Entrepreneurship", "entrepreneurship")}
+          icon={<div />}
+          position={{ x: 0, y: 0 }}
+        />
+        <DesktopIcon
+          label="Research"
+          onClick={() => open("Research", "research")}
+          icon={<div />}
+          position={{ x: 0, y: 0 }}
+        />
+        <DesktopIcon
+          label="Venture"
+          onClick={() => open("Venture", "venture")}
+          icon={<div />}
+          position={{ x: 0, y: 0 }}
+        />
+        <DesktopIcon
+          label="Work"
+          onClick={() => open("Work", "work")}
+          icon={<div />}
+          position={{ x: 0, y: 0 }}
+        />
+        <DesktopIcon
+          label="Projects"
+          onClick={() => open("Projects", "projects")}
+          icon={<div />}
+          position={{ x: 0, y: 0 }}
+        />
+        <DesktopIcon
+          label="Essays"
+          onClick={() => open("Essays", "essays")}
+          icon={<div />}
+          position={{ x: 0, y: 0 }}
+        />
       </div>
     </div>
   );
