@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude / Anthropic artifacts
+claude/
+.claude/
+claude.json
+claude-settings.json
+claude.config.json
+anthropic/
+.anthropic/
+*.anthropic.json
