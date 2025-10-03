@@ -102,6 +102,12 @@ export default function FinderWindow({ window }: FinderWindowProps) {
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
+  const [streaks, setStreaks] = useState({
+    calories: 935,
+    typing: 160,
+    pushups: 366,
+    commits: 100,
+  });
   // Optional GitHub token to avoid rate limits (set NEXT_PUBLIC_GITHUB_TOKEN)
   const githubToken =
     typeof process !== "undefined"
@@ -162,6 +168,70 @@ export default function FinderWindow({ window }: FinderWindowProps) {
         });
     }
   }, [window.content, reloadKey, ghHeaders]);
+
+  // Daily-updating streaks stored in localStorage
+  useEffect(() => {
+    if (typeof globalThis === "undefined" || !("localStorage" in globalThis))
+      return;
+    try {
+      const STORAGE_KEY = "kedaar_streaks_v1";
+      const today = new Date();
+      const todayUtc = new Date(
+        Date.UTC(
+          today.getUTCFullYear(),
+          today.getUTCMonth(),
+          today.getUTCDate()
+        )
+      );
+
+      const raw = globalThis.localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as {
+          calories: number;
+          typing: number;
+          pushups: number;
+          commits: number;
+          lastUpdated: string;
+        };
+        const prev = new Date(parsed.lastUpdated);
+        const prevUtc = new Date(
+          Date.UTC(prev.getUTCFullYear(), prev.getUTCMonth(), prev.getUTCDate())
+        );
+        const diffMs = todayUtc.getTime() - prevUtc.getTime();
+        const diffDays = Math.floor(diffMs / 86400000);
+        if (diffDays > 0) {
+          const updated = {
+            calories: parsed.calories + diffDays,
+            typing: parsed.typing + diffDays,
+            pushups: parsed.pushups + diffDays,
+            commits: parsed.commits + diffDays,
+            lastUpdated: todayUtc.toISOString(),
+          };
+          setStreaks(updated);
+          globalThis.localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+        } else {
+          setStreaks({
+            calories: parsed.calories,
+            typing: parsed.typing,
+            pushups: parsed.pushups,
+            commits: parsed.commits,
+          });
+        }
+      } else {
+        const initial = {
+          calories: 935,
+          typing: 160,
+          pushups: 366,
+          commits: 100,
+          lastUpdated: todayUtc.toISOString(),
+        };
+        setStreaks(initial);
+        globalThis.localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
+      }
+    } catch {
+      // Ignore storage errors
+    }
+  }, []);
 
   // Tabs are created only when clicking items; no auto-creation on load
 
@@ -681,7 +751,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                       🍎 tracking calories
                     </div>
                     <div className="text-3xl font-bold text-green-600">
-                      935 days
+                      {streaks.calories} days
                     </div>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
@@ -689,7 +759,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                       ⌨️ typing
                     </div>
                     <div className="text-3xl font-bold text-green-600">
-                      160 days
+                      {streaks.typing} days
                     </div>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
@@ -697,7 +767,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                       💪 100 pushups every day
                     </div>
                     <div className="text-3xl font-bold text-green-600">
-                      366 days
+                      {streaks.pushups} days
                     </div>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
@@ -705,7 +775,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                       💻 github commits
                     </div>
                     <div className="text-3xl font-bold text-green-600">
-                      100 days
+                      {streaks.commits} days
                     </div>
                   </div>
                 </div>
