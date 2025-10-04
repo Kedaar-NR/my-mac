@@ -37,21 +37,17 @@ export default function Desktop() {
   }, []);
 
   // Check mobile immediately during render
-  const isMobileSync = typeof window !== "undefined" && (
-    window.innerWidth < 900 || 
-    matchMedia("(pointer: coarse)").matches
-  );
+  const isMobileSync =
+    typeof window !== "undefined" &&
+    (window.innerWidth < 900 || matchMedia("(pointer: coarse)").matches);
 
   return (
     <div className="relative w-screen h-screen overflow-hidden">
       {isMobile && (
         <div className="absolute inset-0 z-[9999] flex items-center justify-center bg-white text-black">
           <div className="text-center px-6">
-            <div className="text-2xl font-semibold mb-2">
-              Check my site on desktop!
-            </div>
-            <div className="text-sm opacity-70">
-              This macOS experience is optimized for larger screens.
+            <div className="text-2xl font-semibold">
+              Check on desktop!
             </div>
           </div>
         </div>
