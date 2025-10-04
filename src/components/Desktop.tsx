@@ -12,46 +12,34 @@ import PortfolioWindow from "./PortfolioWindow";
 export default function Desktop() {
   const { windows } = useWindowStore();
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [isMobile, setIsMobile] = useState(false);
+  // Check mobile immediately during render
+  const isMobile = typeof window !== "undefined" && (
+    window.innerWidth < 900 || 
+    matchMedia("(pointer: coarse)").matches
+  );
 
-  // Update time every second (client only)
+  // Update time every second (client only) - only for desktop
   useEffect(() => {
+    if (isMobile) return;
     const interval = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isMobile]);
 
-  useEffect(() => {
-    const checkMobile = () => {
-      const smallViewport =
-        typeof window !== "undefined" && window.innerWidth < 900;
-      const coarsePointer =
-        typeof window !== "undefined" &&
-        matchMedia("(pointer: coarse)").matches;
-      setIsMobile(smallViewport || coarsePointer);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  // Check mobile immediately during render
-  const isMobileSync =
-    typeof window !== "undefined" &&
-    (window.innerWidth < 900 || matchMedia("(pointer: coarse)").matches);
+  // If mobile, show only the "Check on desktop!" message immediately
+  if (isMobile) {
+    return (
+      <div className="w-screen h-screen flex items-center justify-center bg-white text-black">
+        <div className="text-center px-6">
+          <div className="text-2xl font-semibold">Check on desktop!</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-screen h-screen overflow-hidden">
-      {isMobile && (
-        <div className="absolute inset-0 z-[9999] flex items-center justify-center bg-white text-black">
-          <div className="text-center px-6">
-            <div className="text-2xl font-semibold">
-              Check on desktop!
-            </div>
-          </div>
-        </div>
-      )}
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
