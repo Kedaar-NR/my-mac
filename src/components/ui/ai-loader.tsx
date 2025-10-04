@@ -3,30 +3,18 @@
 import { useEffect, useState } from "react";
 
 export const AILoader = () => {
-  const [fadeOut, setFadeOut] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setFadeOut(true);
-    }, 2200);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div
-      className="w-screen h-screen flex items-center justify-center relative transition-opacity duration-700"
-      style={{ opacity: fadeOut ? 0 : 1 }}
+      className="w-screen h-screen flex items-center justify-center fixed inset-0 z-50"
     >
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url('/images/wallpaper.jpg')`,
           backgroundAttachment: "fixed",
-          filter: "brightness(0.3) blur(20px)",
+          filter: "brightness(0.15) blur(20px)",
         }}
       />
-      <div className="absolute inset-0 bg-black opacity-50" />
       <div className="loader-wrapper-apple relative z-10">
         <div className="apple-logo-container">
           <svg viewBox="0 0 814 1000" className="apple-logo-outline">
