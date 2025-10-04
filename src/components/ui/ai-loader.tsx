@@ -5,16 +5,11 @@ import { useEffect, useState } from "react";
 export const AILoader = () => {
   return (
     <div
-      className="w-screen h-screen flex items-center justify-center fixed inset-0 z-50"
+      className="w-screen h-screen flex items-center justify-center fixed inset-0 z-50 backdrop-blur-3xl"
+      style={{
+        backgroundColor: "rgba(0, 0, 0, 0.3)",
+      }}
     >
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url('/images/wallpaper.jpg')`,
-          backgroundAttachment: "fixed",
-          filter: "brightness(0.15) blur(20px)",
-        }}
-      />
       <div className="loader-wrapper-apple relative z-10">
         <div className="apple-logo-container">
           <svg viewBox="0 0 814 1000" className="apple-logo-outline">
