@@ -36,6 +36,12 @@ export default function Desktop() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Check mobile immediately during render
+  const isMobileSync = typeof window !== "undefined" && (
+    window.innerWidth < 900 || 
+    matchMedia("(pointer: coarse)").matches
+  );
+
   return (
     <div className="relative w-screen h-screen overflow-hidden">
       {isMobile && (
