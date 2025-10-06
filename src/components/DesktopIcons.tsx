@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useWindowStore } from "@/store/windowStore";
-
 interface DesktopIconProps {
   icon: React.ReactNode;
   label: string;
