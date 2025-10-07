@@ -1,6 +1,6 @@
 # macOS Portfolio Website
 
-A fully interactive macOS-inspired portfolio website built with Next.js, TypeScript, and Tailwind CSS. This project recreates the macOS desktop experience in a web browser, complete with draggable windows, a functional dock, and authentic UI elements.
+An interactive macOS-inspired portfolio website built with Next.js, TypeScript, and Tailwind CSS. My project recreates the macOS desktop experience in a web browser, complete with draggable windows, a functional dock, and authentic UI elements.
 
 <img width="1432" height="1382" alt="image" src="https://github.com/user-attachments/assets/13bcff04-f927-479c-baf4-56eb1c3a1b8b" />
 
