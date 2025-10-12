@@ -21,7 +21,10 @@ function DesktopIcon({ label, onClick }: DesktopIconProps) {
       className="flex flex-col items-center space-y-1 p-1.5 group pointer-events-auto select-none"
       aria-label={label}
     >
-      <div className="relative w-20 h-20 flex items-center justify-center" aria-hidden="true">
+      <div
+        className="relative w-20 h-20 flex items-center justify-center"
+        aria-hidden="true"
+      >
         {isTextFile ? (
           <svg
             width="80"
@@ -111,7 +114,7 @@ export default function DesktopIcons() {
   return (
     <div className="absolute inset-0 pointer-events-none">
       {/* Single column order per request */}
-      <div className="absolute left-[8%] top-[45%] -translate-y-1/2 flex flex-col items-center gap-6">
+      <div className="absolute left-[8%] top-[50%] -translate-y-1/2 flex flex-col items-center gap-2">
         <DesktopIcon
           label="about_me.txt"
           onClick={() => open("about_me.txt", "about")}
