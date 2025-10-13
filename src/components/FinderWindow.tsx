@@ -951,7 +951,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             name: "FashionWeek.txt",
             key: "fashionweek-txt",
             kind: "txt",
-            date: "Jan 18, 2024",
+            date: "Jan 18, 2025",
             size: "6 KB",
           },
           {
@@ -1038,52 +1038,256 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             </div>
           </div>
         );
-      case "fashionweek-txt":
-        return (
-          <div className="p-6 bg-white text-black font-sans min-h-full">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">
-              FashionWeek.txt
-            </h2>
-            <p className="text-gray-700">Content coming soon...</p>
-          </div>
-        );
       case "omnicreate-txt":
         return (
           <div className="p-6 bg-white text-black font-sans min-h-full">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">
-              OmniCreate.txt
-            </h2>
-            <p className="text-gray-700">Content coming soon...</p>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">OmniCreate.txt</h2>
+            <div className="space-y-2 text-gray-800">
+              <p>
+                Built and sold a motor skills tool company for children with
+                autism. 2,000+ clinic testimonials.
+              </p>
+              <p>
+                1st out of 3,000 in the world’s most competitive youth
+                entrepreneurship competition.
+              </p>
+            </div>
+          </div>
+        );
+                autism. 2,000+ clinic testimonials.
+              </p>
+              <p>
+                1st out of 3,000 in the world’s most competitive youth
+                entrepreneurship competition.
+              </p>
+            </div>
+          </div>
+        );
+      case "fashionweek-txt":
+        return (
+          <div className="p-6 bg-white text-black font-sans min-h-full">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">FashionWeek.txt</h2>
+            <div className="space-y-2 text-gray-800">
+              <p>Identity, Culture, Technology. Fashion Tech.</p>
+              <p>400k followers. 200+ brands.</p>
+              <p>
+                <a
+                  href="https://lowheads.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline"
+                >
+                  lowheads.com
+                </a>
+              </p>
+            </div>
+          </div>
+        );
+              <p>
+                <a
+                  href="https://lowheads.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline"
+                >
+                  lowheads.com
+                </a>
+              </p>
+            </div>
           </div>
         );
       case "magichour-txt":
         return (
           <div className="p-6 bg-white text-black font-sans min-h-full">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">
-              MagicHour.txt
-            </h2>
-            <p className="text-gray-700">Content coming soon...</p>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">MagicHour.txt</h2>
+            <div className="space-y-2 text-gray-800">
+              <p>Built ComfyUI video clothes-swap workflows for the NBA NFL MLB.</p>
+              <p>2M+ users. Growing the largest ComfyUI workflow marketplace ever.</p>
+              <p>Won an NVIDIA RTX 5090 at ComfyUI’s official hackathon.</p>
+              <p>
+                Created production-ready graphs that balanced quality and throughput; standardized nodes and presets for non-technical creators.
+              </p>
+              <p>
+                Drove marketplace discoverability with clear metadata, thumbnails, and sensible defaults.
+              </p>
+            </div>
+          </div>
+        );
+              </p>
+              <p>
+                2M+ users. Growing the largest ComfyUI workflow marketplace
+                ever.
+              </p>
+              <p>Won an NVIDIA RTX 5090 at ComfyUI’s official hackathon.</p>
+              <p>
+                Created production-ready graphs that balanced quality and
+                throughput; standardized nodes and presets for non-technical
+                creators.
+              </p>
+              <p>
+                Drove marketplace discoverability with clear metadata,
+                thumbnails, and sensible defaults—lowering the barrier to first
+                publish and first success.
+              </p>
+            </div>
           </div>
         );
       case "cisco-txt":
         return (
           <div className="p-6 bg-white text-black font-sans min-h-full">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Cisco.txt</h2>
-            <p className="text-gray-700">Content coming soon...</p>
+            <div className="space-y-2 text-gray-800">
+              <p>Automated router configuration optimization in a Cisco ML team.</p>
+              <p>Won 1st out of 250 in the intern hackathon.</p>
+              <p>
+                Built scripts to analyze telemetry and recommend parameter changes that reduced error rates and deployment time.
+              </p>
+              <p>
+                Collaborated with senior engineers to ship changes behind flags and measure impact with guard-rail metrics.
+              </p>
+            </div>
+          </div>
+        );
+              </p>
+              <p>Won 1st out of 250 in the intern hackathon.</p>
+              <p>
+                Built scripts to analyze telemetry and recommend parameter
+                changes that reduced error rates and deployment time.
+              </p>
+              <p>
+                Collaborated with senior engineers to ship changes behind flags
+                and measure impact with guard-rail metrics.
+              </p>
+            </div>
+          </div>
+        );
+      case "stanford-healthcare-txt":
+        return (
+          <div className="p-6 bg-white text-black font-sans min-h-full">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              StanfordHealthCare.txt
+            </h2>
+            <div className="space-y-2 text-gray-800">
+              <p>
+                Leading Berkeley/Stanford/UCSF researchers to create the first
+                mixed reality stroke rehab platform.
+              </p>
+              <p>Published in Nature.</p>
+              <p>
+                Architected patient-safe experiences with calibrated motion
+                tracking, progression loops, and clinician dashboards.
+              </p>
+              <p>
+                Focused on measurable recovery markers and adherence, bringing
+                lab-grade ideas into a hospital-ready product flow.
+              </p>
+            </div>
+          </div>
+        );
+      case "techstars-txt":
+        return (
+          <div className="p-6 bg-white text-black font-sans min-h-full">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              Techstars.txt
+            </h2>
+            <div className="space-y-2 text-gray-800">
+              <p>Ran the SF accelerator.</p>
+              <p>
+                <a
+                  href="https://www.techstars.com/accelerators/san-francisco"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline"
+                >
+                  Accelerator link
+                </a>
+              </p>
+              <p>
+                Sourced companies, coordinated mentor sessions, and supported
+                fundraising narratives and data rooms ahead of demo day.
+              </p>
+              <p>
+                Helped founders sharpen ICP, distribution plans, and
+                milestone-driven roadmaps.
+              </p>
+            </div>
+          </div>
+        );
+      case "various-companies-txt":
+        return (
+          <div className="p-6 bg-white text-black font-sans min-h-full">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              VariousCompanies.txt
+            </h2>
+            <div className="space-y-2 text-gray-800">
+              <p>
+                Advising health and frontier tech startups on GTM, product, and
+                fundraising.
+              </p>
+              <p>
+                Also consulted for Blue Origin on space manufacturing strategy.
+              </p>
+              <p>
+                Typical work includes early customer discovery, first-principles
+                pricing, and narrative design that aligns product with market
+                timing.
+              </p>
+              <p>
+                For hardware and space, I focus on feasibility maps,
+                manufacturability, and partner ecosystems.
+              </p>
+            </div>
           </div>
         );
       case "v11-txt":
         return (
           <div className="p-6 bg-white text-black font-sans min-h-full">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">V11.txt</h2>
-            <p className="text-gray-700">Content coming soon...</p>
+            <div className="space-y-2 text-gray-800">
+              <p>
+                Building a private network of the top 0.1% emerging builders,
+                researchers, and investors.
+              </p>
+              <p>$300M+ Raised. $3B+ Value Created.</p>
+              <p>
+                Curate rooms where deep technical talent meets capital and
+                operators—opt-in introductions, founder circles, and thematic
+                sprints.
+              </p>
+              <p>
+                Help portfolio founders with BD intros, early hiring, and
+                pitch/positioning for the next round.
+              </p>
+            </div>
           </div>
         );
       case "nfx-txt":
         return (
           <div className="p-6 bg-white text-black font-sans min-h-full">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">NFX.txt</h2>
-            <p className="text-gray-700">Content coming soon...</p>
+            <div className="space-y-2 text-gray-800">
+              <p>
+                1/19 fellows at the world’s largest early-stage fund; $1.5B+
+                AUM.
+              </p>
+              <p>
+                Lyft, Doordash, Mammoth Biosciences, Patreon, Poshmark, Trulia,
+                Twist Bioscience, and more.
+              </p>
+              <p>
+                Contact:{" "}
+                <a
+                  href="mailto:kedaar.rentachintala@nfx.com"
+                  className="text-blue-600 underline"
+                >
+                  kedaar.rentachintala@nfx.com
+                </a>
+              </p>
+              <p>
+                Work spans diligence, market mapping, and supporting founders on
+                zero-to-one GTM and product wedges.
+              </p>
+            </div>
           </div>
         );
       case "soma-capital-txt":
@@ -1092,14 +1296,52 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
               SomaCapital.txt
             </h2>
-            <p className="text-gray-700">Content coming soon...</p>
+            <div className="space-y-2 text-gray-800">
+              <p>
+                Building a category-defining fund; 30+ unicorns, $50B+ in value.
+              </p>
+              <p>
+                Rippling, Deel, Ramp, Cognition Labs, Mercor, Zepto, Coda,
+                Kalshi, Astranis, Razorpay, and more.
+              </p>
+              <p>
+                Programs:{" "}
+                <a
+                  href="https://programs.somacap.com/fellows"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline"
+                >
+                  Fellows
+                </a>{" "}
+                ·{" "}
+                <a
+                  href="https://programs.somacap.com/scholars"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline"
+                >
+                  Scholars
+                </a>
+              </p>
+              <p>
+                Support portfolio with hiring pipelines, customer intros, and
+                distribution experiments tuned to early traction.
+              </p>
+            </div>
           </div>
         );
       case "bair-txt":
         return (
           <div className="p-6 bg-white text-black font-sans min-h-full">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">BAIR.txt</h2>
-            <p className="text-gray-700">Content coming soon...</p>
+            <div className="space-y-2 text-gray-800">
+              <p>Hierarchical abstraction for VLMs.</p>
+              <p>
+                Exploring modular visual reasoning stacks that separate
+                perception from planning for more controllable behaviors.
+              </p>
+            </div>
           </div>
         );
       case "stanford-txt":
@@ -1108,7 +1350,22 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
               Stanford.txt
             </h2>
-            <p className="text-gray-700">Content coming soon...</p>
+            <div className="space-y-4 text-gray-800">
+              <div className="space-y-1">
+                <p>
+                  Built the first LLM for music with Stanford and UIUC
+                  researchers.
+                </p>
+                <p>Published a paper on generative AI inpainting.</p>
+              </div>
+              <div className="space-y-1">
+                <p>
+                  Built a fake news detector supporting all media types. 98%
+                  accurate.
+                </p>
+                <p>Published a paper on what I learned.</p>
+              </div>
+            </div>
           </div>
         );
       case "macalester-txt":
