@@ -917,34 +917,6 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             size: "6 KB",
           },
         ]);
-            name: "StanfordHealthCare.txt",
-            key: "stanford-healthcare-txt",
-            kind: "txt",
-            date: "Jun 01, 2025",
-            size: "7 KB",
-          },
-        ]);
-            name: "StanfordHealthCare.txt",
-            key: "stanford-healthcare-txt",
-            kind: "txt",
-            date: "Jun 01, 2025",
-            size: "7 KB",
-          },
-          {
-            name: "Techstars.txt",
-            key: "techstars-txt",
-            kind: "txt",
-            date: "Jan 15, 2025",
-            size: "4 KB",
-          },
-          {
-            name: "VariousCompanies.txt",
-            key: "various-companies-txt",
-            kind: "txt",
-            date: "Sep 01, 2023",
-            size: "6 KB",
-          },
-        ]);
       case "entrepreneurship":
         return renderItems("Entrepreneurship", [
           {
@@ -1054,15 +1026,6 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             </div>
           </div>
         );
-                autism. 2,000+ clinic testimonials.
-              </p>
-              <p>
-                1st out of 3,000 in the world’s most competitive youth
-                entrepreneurship competition.
-              </p>
-            </div>
-          </div>
-        );
       case "fashionweek-txt":
         return (
           <div className="p-6 bg-white text-black font-sans min-h-full">
@@ -1070,19 +1033,6 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             <div className="space-y-2 text-gray-800">
               <p>Identity, Culture, Technology. Fashion Tech.</p>
               <p>400k followers. 200+ brands.</p>
-              <p>
-                <a
-                  href="https://lowheads.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 underline"
-                >
-                  lowheads.com
-                </a>
-              </p>
-            </div>
-          </div>
-        );
               <p>
                 <a
                   href="https://lowheads.com/"
@@ -1113,25 +1063,6 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             </div>
           </div>
         );
-              </p>
-              <p>
-                2M+ users. Growing the largest ComfyUI workflow marketplace
-                ever.
-              </p>
-              <p>Won an NVIDIA RTX 5090 at ComfyUI’s official hackathon.</p>
-              <p>
-                Created production-ready graphs that balanced quality and
-                throughput; standardized nodes and presets for non-technical
-                creators.
-              </p>
-              <p>
-                Drove marketplace discoverability with clear metadata,
-                thumbnails, and sensible defaults—lowering the barrier to first
-                publish and first success.
-              </p>
-            </div>
-          </div>
-        );
       case "cisco-txt":
         return (
           <div className="p-6 bg-white text-black font-sans min-h-full">
@@ -1144,19 +1075,6 @@ export default function FinderWindow({ window }: FinderWindowProps) {
               </p>
               <p>
                 Collaborated with senior engineers to ship changes behind flags and measure impact with guard-rail metrics.
-              </p>
-            </div>
-          </div>
-        );
-              </p>
-              <p>Won 1st out of 250 in the intern hackathon.</p>
-              <p>
-                Built scripts to analyze telemetry and recommend parameter
-                changes that reduced error rates and deployment time.
-              </p>
-              <p>
-                Collaborated with senior engineers to ship changes behind flags
-                and measure impact with guard-rail metrics.
               </p>
             </div>
           </div>
@@ -1374,7 +1292,18 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
               Macalester.txt
             </h2>
-            <p className="text-gray-700">Content coming soon...</p>
+            <div className="space-y-2 text-gray-800">
+              <p>
+                Researched neurodiversity and social well-being and built the
+                world’s largest micro-gesture dataset. Trained an emotion
+                recognition model for autistic youth and published/presented a
+                paper at IJCAI.
+              </p>
+              <p>
+                Collected consented in-the-wild signals, created labeling
+                protocols with clinicians, and evaluated model fairness.
+              </p>
+            </div>
           </div>
         );
       case "life":
