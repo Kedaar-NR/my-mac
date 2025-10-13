@@ -23,7 +23,7 @@ export default function MenuBar({ currentTime }: MenuBarProps) {
         {/* Left side - Apple menu and app menus */}
         <div className="flex items-center space-x-6">
           {/* Apple Logo */}
-          <div className="px-1.5 py-0.5">
+          <div className="px-1.5 py-0.5" title="Apple menu" aria-label="Apple menu" role="button">
             <svg
               width="16"
               height="16"
@@ -100,7 +100,7 @@ export default function MenuBar({ currentTime }: MenuBarProps) {
             <rect x="14" y="14" width="7" height="7" rx="1" />
             <rect x="3" y="14" width="7" height="7" rx="1" />
           </svg>
-          <span className="font-medium">{formatTime(currentTime)}</span>
+          <span className="font-medium" aria-label={formatTime(currentTime)}>{formatTime(currentTime)}</span>
         </div>
       </div>
     </div>
