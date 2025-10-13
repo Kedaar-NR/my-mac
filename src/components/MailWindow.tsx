@@ -34,22 +34,16 @@ export default function MailWindow({ window }: MailWindowProps) {
     message: "",
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleDragStop = (e: any, d: { x: number; y: number }) => {
+  const handleDragStop = (_e: unknown, d: { x: number; y: number }) => {
     updateWindowPosition(window.id, d.x, d.y);
   };
 
   const handleResizeStop = (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    e: any,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    direction: any,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ref: any,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    delta: any,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    position: any
+    _e: unknown,
+    _direction: unknown,
+    ref: { style: { width: string; height: string } },
+    _delta: unknown,
+    position: { x: number; y: number }
   ) => {
     updateWindowSize(
       window.id,
