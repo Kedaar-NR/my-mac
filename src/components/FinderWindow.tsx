@@ -895,6 +895,41 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             date: "May 12, 2024",
             size: "3 KB",
           },
+          {
+            name: "StanfordHealthCare.txt",
+            key: "stanford-healthcare-txt",
+            kind: "txt",
+            date: "Jun 01, 2025",
+            size: "7 KB",
+          },
+        ]);
+            name: "StanfordHealthCare.txt",
+            key: "stanford-healthcare-txt",
+            kind: "txt",
+            date: "Jun 01, 2025",
+            size: "7 KB",
+          },
+        ]);
+            name: "StanfordHealthCare.txt",
+            key: "stanford-healthcare-txt",
+            kind: "txt",
+            date: "Jun 01, 2025",
+            size: "7 KB",
+          },
+          {
+            name: "Techstars.txt",
+            key: "techstars-txt",
+            kind: "txt",
+            date: "Jan 15, 2025",
+            size: "4 KB",
+          },
+          {
+            name: "VariousCompanies.txt",
+            key: "various-companies-txt",
+            kind: "txt",
+            date: "Sep 01, 2023",
+            size: "6 KB",
+          },
         ]);
       case "entrepreneurship":
         return renderItems("Entrepreneurship", [
