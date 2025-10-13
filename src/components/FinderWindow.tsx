@@ -896,6 +896,13 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             size: "3 KB",
           },
           {
+            name: "Techstars.txt",
+            key: "techstars-txt",
+            kind: "txt",
+            date: "Jan 15, 2025",
+            size: "4 KB",
+          },
+          {
             name: "StanfordHealthCare.txt",
             key: "stanford-healthcare-txt",
             kind: "txt",
