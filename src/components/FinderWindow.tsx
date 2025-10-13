@@ -909,6 +909,13 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             date: "Jun 01, 2025",
             size: "7 KB",
           },
+          {
+            name: "VariousCompanies.txt",
+            key: "various-companies-txt",
+            kind: "txt",
+            date: "Sep 01, 2023",
+            size: "6 KB",
+          },
         ]);
             name: "StanfordHealthCare.txt",
             key: "stanford-healthcare-txt",
