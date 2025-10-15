@@ -123,54 +123,8 @@ export default function FinderWindow({ window }: FinderWindowProps) {
     [githubToken]
   );
 
-  useEffect(() => {
-    if (window.content === "projects") {
-      setLoading(true);
-      fetch(
-        "https://api.github.com/users/kedaar-nr/repos?type=owner&sort=updated&per_page=100",
-        { headers: ghHeaders, cache: "no-store" }
-      )
-        .then(async (res) => {
-          if (!res.ok) {
-            throw new Error(`GitHub ${res.status}`);
-          }
-          const data = (await res.json()) as GitHubRepo[];
-          const publicRepos = (Array.isArray(data) ? data : []).filter(
-            (repo) => !repo.private
-          );
-          // fetch top languages (up to 3) for each repo
-          const reposWithLangs = await Promise.all(
-            publicRepos.map(async (repo) => {
-              try {
-                const resp = await fetch(repo.languages_url, {
-                  headers: ghHeaders,
-                });
-                const obj = (await resp.json()) as Record<string, number>;
-                const top = Object.entries(obj as Record<string, number>)
-                  .sort((a, b) => b[1] - a[1])
-                  .slice(0, 3)
-                  .map(([name]) => String(name));
-                return { ...repo, _languages: top } as GitHubRepo;
-              } catch {
-                return {
-                  ...repo,
-                  _languages: repo.language ? [repo.language] : [],
-                } as GitHubRepo;
-              }
-            })
-          );
-          setRepos(reposWithLangs);
-          setLoading(false);
-        })
-        .catch(() => {
-          setLoading(false);
-          setRepos([]);
-        });
-    }
-  }, [window.content, reloadKey, ghHeaders]);
-
-  // Daily-updating streaks stored in localStorage
-  useEffect(() => {
+  // Helper to update daily streaks in localStorage
+  const updateDailyStreaksIfNeeded = () => {
     if (typeof globalThis === "undefined" || !("localStorage" in globalThis))
       return;
     try {
@@ -231,7 +185,72 @@ export default function FinderWindow({ window }: FinderWindowProps) {
     } catch {
       // Ignore storage errors
     }
+  };
+
+  useEffect(() => {
+    if (window.content === "projects") {
+      setLoading(true);
+      fetch(
+        "https://api.github.com/users/kedaar-nr/repos?type=owner&sort=updated&per_page=100",
+        { headers: ghHeaders, cache: "no-store" }
+      )
+        .then(async (res) => {
+          if (!res.ok) {
+            throw new Error(`GitHub ${res.status}`);
+          }
+          const data = (await res.json()) as GitHubRepo[];
+          const publicRepos = (Array.isArray(data) ? data : []).filter(
+            (repo) => !repo.private
+          );
+          // fetch top languages (up to 3) for each repo
+          const reposWithLangs = await Promise.all(
+            publicRepos.map(async (repo) => {
+              try {
+                const resp = await fetch(repo.languages_url, {
+                  headers: ghHeaders,
+                });
+                const obj = (await resp.json()) as Record<string, number>;
+                const top = Object.entries(obj as Record<string, number>)
+                  .sort((a, b) => b[1] - a[1])
+                  .slice(0, 3)
+                  .map(([name]) => String(name));
+                return { ...repo, _languages: top } as GitHubRepo;
+              } catch {
+                return {
+                  ...repo,
+                  _languages: repo.language ? [repo.language] : [],
+                } as GitHubRepo;
+              }
+            })
+          );
+          setRepos(reposWithLangs);
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+          setRepos([]);
+        });
+    }
+  }, [window.content, reloadKey, ghHeaders]);
+
+  // Daily-updating streaks stored in localStorage
+  useEffect(() => {
+    updateDailyStreaksIfNeeded();
   }, []);
+
+  // Also refresh streaks when About tab/content becomes active in case the window mounts earlier
+  useEffect(() => {
+    const contentKey = ((): string | undefined => {
+      if (window.type === "finder" && window.tabs && window.activeTabId) {
+        const t = window.tabs.find((t) => t.id === window.activeTabId);
+        if (t) return t.content;
+      }
+      return window.content;
+    })();
+    if (contentKey === "about") {
+      updateDailyStreaksIfNeeded();
+    }
+  }, [window.activeTabId, window.tabs, window.content, window.type]);
 
   // Tabs are created only when clicking items; no auto-creation on load
 
@@ -1013,7 +1032,9 @@ export default function FinderWindow({ window }: FinderWindowProps) {
       case "omnicreate-txt":
         return (
           <div className="p-6 bg-white text-black font-sans min-h-full">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">OmniCreate.txt</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              OmniCreate.txt
+            </h2>
             <div className="space-y-2 text-gray-800">
               <p>
                 Built and sold a motor skills tool company for children with
@@ -1029,7 +1050,9 @@ export default function FinderWindow({ window }: FinderWindowProps) {
       case "fashionweek-txt":
         return (
           <div className="p-6 bg-white text-black font-sans min-h-full">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">FashionWeek.txt</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              FashionWeek.txt
+            </h2>
             <div className="space-y-2 text-gray-800">
               <p>Identity, Culture, Technology. Fashion Tech.</p>
               <p>400k followers. 200+ brands.</p>
@@ -1049,16 +1072,26 @@ export default function FinderWindow({ window }: FinderWindowProps) {
       case "magichour-txt":
         return (
           <div className="p-6 bg-white text-black font-sans min-h-full">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">MagicHour.txt</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              MagicHour.txt
+            </h2>
             <div className="space-y-2 text-gray-800">
-              <p>Built ComfyUI video clothes-swap workflows for the NBA NFL MLB.</p>
-              <p>2M+ users. Growing the largest ComfyUI workflow marketplace ever.</p>
-              <p>Won an NVIDIA RTX 5090 at ComfyUI’s official hackathon.</p>
               <p>
-                Created production-ready graphs that balanced quality and throughput; standardized nodes and presets for non-technical creators.
+                Built ComfyUI video clothes-swap workflows for the NBA NFL MLB.
               </p>
               <p>
-                Drove marketplace discoverability with clear metadata, thumbnails, and sensible defaults.
+                2M+ users. Growing the largest ComfyUI workflow marketplace
+                ever.
+              </p>
+              <p>Won an NVIDIA RTX 5090 at ComfyUI’s official hackathon.</p>
+              <p>
+                Created production-ready graphs that balanced quality and
+                throughput; standardized nodes and presets for non-technical
+                creators.
+              </p>
+              <p>
+                Drove marketplace discoverability with clear metadata,
+                thumbnails, and sensible defaults.
               </p>
             </div>
           </div>
@@ -1068,13 +1101,17 @@ export default function FinderWindow({ window }: FinderWindowProps) {
           <div className="p-6 bg-white text-black font-sans min-h-full">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Cisco.txt</h2>
             <div className="space-y-2 text-gray-800">
-              <p>Automated router configuration optimization in a Cisco ML team.</p>
+              <p>
+                Automated router configuration optimization in a Cisco ML team.
+              </p>
               <p>Won 1st out of 250 in the intern hackathon.</p>
               <p>
-                Built scripts to analyze telemetry and recommend parameter changes that reduced error rates and deployment time.
+                Built scripts to analyze telemetry and recommend parameter
+                changes that reduced error rates and deployment time.
               </p>
               <p>
-                Collaborated with senior engineers to ship changes behind flags and measure impact with guard-rail metrics.
+                Collaborated with senior engineers to ship changes behind flags
+                and measure impact with guard-rail metrics.
               </p>
             </div>
           </div>
