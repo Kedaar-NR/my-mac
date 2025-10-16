@@ -70,16 +70,23 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
         const isAboutMe = windowData.content === 'about';
         const isMarkdown = windowData.content === 'markdown-placeholder';
         const isProjects = windowData.content === 'projects';
+
+        // Calculate window dimensions to fit screen
+        const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1920;
+        const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 1080;
+        const maxWidth = Math.min(900, screenWidth - 100);
+        const maxHeight = Math.min(700, screenHeight - 150);
+
         const newWindow: Window = {
             ...windowData,
             id: `${windowData.type}-${Date.now()}`,
             isOpen: true,
             isMinimized: false,
             isMaximized: false,
-            x: isMarkdown ? 450 + (state.windows.length * 30) : 400 + (state.windows.length * 30),
+            x: isMarkdown ? 200 + (state.windows.length * 30) : 150 + (state.windows.length * 30),
             y: isMarkdown ? 120 + (state.windows.length * 30) : 80 + (state.windows.length * 30),
-            width: windowData.type === 'finder' ? 900 : 600,
-            height: windowData.type === 'finder' ? (isAboutMe ? 1150 : isProjects ? 900 : 700) : 500,
+            width: windowData.type === 'finder' ? maxWidth : Math.min(600, screenWidth - 200),
+            height: windowData.type === 'finder' ? maxHeight : Math.min(500, screenHeight - 200),
             zIndex: state.nextZIndex,
             tabs: [],
             activeTabId: undefined,
