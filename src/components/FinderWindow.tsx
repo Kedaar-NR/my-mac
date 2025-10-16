@@ -1575,7 +1575,9 @@ export default function FinderWindow({ window }: FinderWindowProps) {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-auto h-full">{getContent()}</div>
+        <div className="flex-1 overflow-y-auto overflow-x-hidden min-h-0 max-h-full">
+          {getContent()}
+        </div>
       </motion.div>
     </Rnd>
   );
