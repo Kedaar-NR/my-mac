@@ -11,7 +11,7 @@ import PortfolioWindow from "./PortfolioWindow";
 import { AILoader } from "./ui/ai-loader";
 
 export default function Desktop() {
-  const { windows } = useWindowStore();
+  const { windows, openWindow } = useWindowStore();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isMobile, setIsMobile] = useState(false);
   const [isClient, setIsClient] = useState(false);
@@ -48,6 +48,20 @@ export default function Desktop() {
     }, 1000);
     return () => clearInterval(interval);
   }, [isMobile]);
+
+  // Auto-open about_me.txt after loading completes
+  useEffect(() => {
+    if (isLoading || isMobile || !isClient) return;
+
+    // Check if about_me.txt is already open
+    const aboutMeOpen = windows.some(
+      (w) => w.title === "about_me.txt" && w.content === "about"
+    );
+
+    if (!aboutMeOpen) {
+      openWindow({ title: "about_me.txt", type: "finder", content: "about" });
+    }
+  }, [isLoading, isMobile, isClient, windows, openWindow]);
 
   // Wait for client-side hydration to avoid mismatch
   if (!isClient) {
