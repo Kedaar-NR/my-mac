@@ -775,10 +775,10 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                   </div>
                   <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
                     <div className="text-sm text-gray-600 mb-1 font-sans">
-                      ⌨️ typing
+                      ⌨️ typing speed
                     </div>
                     <div className="text-3xl font-bold text-green-600">
-                      {streaks.typing} days
+                      {streaks.typing} WPM
                     </div>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
