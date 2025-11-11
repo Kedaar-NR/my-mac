@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Rnd } from "react-rnd";
 import { motion } from "framer-motion";
 import {
@@ -124,19 +124,16 @@ export default function FinderWindow({ window }: FinderWindowProps) {
   );
 
   // Helper to update daily streaks in localStorage
-  const updateDailyStreaksIfNeeded = () => {
+  // Returns a Date set to local midnight for the given date
+  const toLocalMidnight = (d: Date): Date =>
+    new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+  const updateDailyStreaksIfNeeded = useCallback(() => {
     if (typeof globalThis === "undefined" || !("localStorage" in globalThis))
       return;
     try {
       const STORAGE_KEY = "kedaar_streaks_v1";
-      const today = new Date();
-      const todayUtc = new Date(
-        Date.UTC(
-          today.getUTCFullYear(),
-          today.getUTCMonth(),
-          today.getUTCDate()
-        )
-      );
+      const todayLocalMidnight = toLocalMidnight(new Date());
 
       const raw = globalThis.localStorage.getItem(STORAGE_KEY);
       if (raw) {
@@ -145,13 +142,35 @@ export default function FinderWindow({ window }: FinderWindowProps) {
           typing: number;
           pushups: number;
           commits: number;
-          lastUpdated: string;
+          lastUpdated?: string;
         };
-        const prev = new Date(parsed.lastUpdated);
-        const prevUtc = new Date(
-          Date.UTC(prev.getUTCFullYear(), prev.getUTCMonth(), prev.getUTCDate())
-        );
-        const diffMs = todayUtc.getTime() - prevUtc.getTime();
+        // Fallback if lastUpdated missing or invalid
+        const prevRaw = parsed.lastUpdated;
+        const prev = prevRaw ? new Date(prevRaw) : todayLocalMidnight;
+        if (!prevRaw || isNaN(prev.getTime())) {
+          // Normalize stored object to include a valid lastUpdated without altering counts
+          const normalized = {
+            calories: parsed.calories ?? 935,
+            typing: parsed.typing ?? 160,
+            pushups: parsed.pushups ?? 366,
+            commits: parsed.commits ?? 100,
+            lastUpdated: todayLocalMidnight.toISOString(),
+          };
+          setStreaks({
+            calories: normalized.calories,
+            typing: normalized.typing,
+            pushups: normalized.pushups,
+            commits: normalized.commits,
+          });
+          globalThis.localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(normalized)
+          );
+          return;
+        }
+        const prevLocalMidnight = toLocalMidnight(prev);
+        const diffMs =
+          todayLocalMidnight.getTime() - prevLocalMidnight.getTime();
         const diffDays = Math.floor(diffMs / 86400000);
         if (diffDays > 0) {
           const updated = {
@@ -159,7 +178,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             typing: parsed.typing + diffDays,
             pushups: parsed.pushups + diffDays,
             commits: parsed.commits + diffDays,
-            lastUpdated: todayUtc.toISOString(),
+            lastUpdated: todayLocalMidnight.toISOString(),
           };
           setStreaks(updated);
           globalThis.localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
@@ -177,7 +196,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
           typing: 160,
           pushups: 366,
           commits: 100,
-          lastUpdated: todayUtc.toISOString(),
+          lastUpdated: todayLocalMidnight.toISOString(),
         };
         setStreaks(initial);
         globalThis.localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
@@ -185,7 +204,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
     } catch {
       // Ignore storage errors
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (window.content === "projects") {
@@ -236,7 +255,30 @@ export default function FinderWindow({ window }: FinderWindowProps) {
   // Daily-updating streaks stored in localStorage
   useEffect(() => {
     updateDailyStreaksIfNeeded();
-  }, []);
+  }, [updateDailyStreaksIfNeeded]);
+
+  // Periodically check for a new local day while the tab remains open
+  useEffect(() => {
+    const intervalId = globalThis.setInterval(() => {
+      updateDailyStreaksIfNeeded();
+    }, 5 * 60 * 1000); // every 5 minutes
+    return () => {
+      globalThis.clearInterval(intervalId);
+    };
+  }, [updateDailyStreaksIfNeeded]);
+
+  // Update on visibility change (e.g., when user comes back after midnight)
+  useEffect(() => {
+    const handler = () => {
+      if (document.visibilityState === "visible") {
+        updateDailyStreaksIfNeeded();
+      }
+    };
+    document.addEventListener("visibilitychange", handler);
+    return () => {
+      document.removeEventListener("visibilitychange", handler);
+    };
+  }, [updateDailyStreaksIfNeeded]);
 
   // Also refresh streaks when About tab/content becomes active in case the window mounts earlier
   useEffect(() => {
@@ -250,7 +292,13 @@ export default function FinderWindow({ window }: FinderWindowProps) {
     if (contentKey === "about") {
       updateDailyStreaksIfNeeded();
     }
-  }, [window.activeTabId, window.tabs, window.content, window.type]);
+  }, [
+    window.activeTabId,
+    window.tabs,
+    window.content,
+    window.type,
+    updateDailyStreaksIfNeeded,
+  ]);
 
   // Tabs are created only when clicking items; no auto-creation on load
 
