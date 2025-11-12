@@ -69,8 +69,6 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
 
         const isAboutMe = windowData.content === 'about';
         const isMarkdown = windowData.content === 'markdown-placeholder';
-        const isProjects = windowData.content === 'projects';
-
         // Calculate window dimensions to fit screen
         const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1920;
         const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 1080;
