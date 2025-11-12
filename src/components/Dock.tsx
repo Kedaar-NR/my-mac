@@ -133,27 +133,20 @@ function DockIcon({
 }
 
 export default function Dock() {
-  const { windows } = useWindowStore();
+  const { windows, openWindow } = useWindowStore();
 
   const dockApps = [
     {
       iconSrc: "/images/finder.jpeg",
       label: "Finder",
       isActive: true,
+      onClick: () => {
+        openWindow({ title: "Finder", type: "finder", content: "finder-home" });
+      },
     },
     {
       iconSrc: "/images/safari.jpeg",
       label: "Safari",
-      isActive: true,
-    },
-    {
-      iconSrc: "/images/spotify.jpeg",
-      label: "Spotify",
-      isActive: true,
-    },
-    {
-      iconSrc: "/images/apple-music.jpeg",
-      label: "Apple Music",
       isActive: true,
     },
     {
@@ -166,6 +159,21 @@ export default function Dock() {
           window.location.href = "sms:6506607341";
         }
       },
+    },
+    {
+      iconSrc: "/images/spotify.jpeg",
+      label: "Spotify",
+      isActive: true,
+      onClick: () => {
+        if (typeof window !== "undefined") {
+          window.open("https://open.spotify.com/user/dnm1bxd8ubssltoz7dkczz2tt", "_blank");
+        }
+      },
+    },
+    {
+      iconSrc: "/images/apple-music.jpeg",
+      label: "Apple Music",
+      isActive: true,
     },
     {
       iconSrc: "/images/launchpad.jpeg",

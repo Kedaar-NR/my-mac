@@ -75,7 +75,7 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
         const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1920;
         const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 1080;
         const maxWidth = Math.min(900, screenWidth - 100);
-        const maxHeight = Math.min(700, screenHeight - 150);
+        const maxHeight = isAboutMe ? Math.min(850, screenHeight - 100) : Math.min(700, screenHeight - 150);
 
         const newWindow: Window = {
             ...windowData,

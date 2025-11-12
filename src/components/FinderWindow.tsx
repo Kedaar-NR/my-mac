@@ -704,6 +704,89 @@ export default function FinderWindow({ window }: FinderWindowProps) {
   const getContent = () => {
     const contentKey = activeContent;
     switch (contentKey) {
+      case "finder-home":
+        return (
+          <div className="p-0 bg-white text-black min-h-full overflow-auto">
+            <div className="flex flex-col">
+              {[
+                { name: "about_me.txt", content: "about", isFile: true },
+                { name: "Entrepreneurship", content: "entrepreneurship", isFile: false },
+                { name: "Research", content: "research", isFile: false },
+                { name: "Venture", content: "venture", isFile: false },
+                { name: "Work", content: "work", isFile: false },
+                { name: "Projects", content: "projects", isFile: false },
+                { name: "Essays", content: "essays", isFile: false },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() => openOrFocusTab(window.id, item.name, item.content)}
+                  className="flex items-center gap-3 px-4 py-2 hover:bg-blue-50 cursor-pointer border-b border-gray-100"
+                >
+                  {item.isFile ? (
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 64 64"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M14 6 L42 6 L52 16 L52 58 L14 58 Z" fill="#FFFFFF" />
+                      <path d="M42 6 L42 16 L52 16 Z" fill="#E0E0E0" />
+                      <path
+                        d="M14 6 L42 6 L52 16 L52 58 L14 58 Z M42 6 L42 16 L52 16"
+                        stroke="#000000"
+                        strokeWidth="0.5"
+                        fill="none"
+                      />
+                      <text
+                        x="33"
+                        y="36"
+                        fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+                        fontSize="10"
+                        fontWeight="600"
+                        fill="#8E8E93"
+                        textAnchor="middle"
+                      >
+                        TXT
+                      </text>
+                    </svg>
+                  ) : (
+                    <svg
+                      width="32"
+                      height="32"
+                      viewBox="0 0 64 64"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <defs>
+                        <linearGradient
+                          id={`folderGradient-finder-${index}`}
+                          x1="0%"
+                          y1="0%"
+                          x2="0%"
+                          y2="100%"
+                        >
+                          <stop offset="0%" style={{ stopColor: "#6DB3E8", stopOpacity: 1 }} />
+                          <stop offset="100%" style={{ stopColor: "#4A9CD9", stopOpacity: 1 }} />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M8 20 C8 18 9 17 11 17 L22 17 L25 20 L54 20 C56 20 57 21 57 23 L57 48 C57 50 56 51 54 51 L11 51 C9 51 8 50 8 48 Z"
+                        fill={`url(#folderGradient-finder-${index})`}
+                      />
+                      <path
+                        d="M22 17 L25 20 L11 20 C9 20 8 19 8 17 L8 17 C8 17 9 17 11 17 Z"
+                        fill="#7FC4EF"
+                        opacity="0.6"
+                      />
+                    </svg>
+                  )}
+                  <span className="text-sm font-medium text-gray-900">{item.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
       case "about":
         return (
           <div className="p-8 bg-white text-black font-mono min-h-full overflow-auto">

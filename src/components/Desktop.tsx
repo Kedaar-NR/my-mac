@@ -53,15 +53,10 @@ export default function Desktop() {
   useEffect(() => {
     if (isLoading || isMobile || !isClient) return;
 
-    // Check if about_me.txt is already open
-    const aboutMeOpen = windows.some(
-      (w) => w.title === "about_me.txt" && w.content === "about"
-    );
-
-    if (!aboutMeOpen) {
-      openWindow({ title: "about_me.txt", type: "finder", content: "about" });
-    }
-  }, [isLoading, isMobile, isClient, windows, openWindow]);
+    // Open about_me.txt once on initial load
+    openWindow({ title: "about_me.txt", type: "finder", content: "about" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, isMobile, isClient]);
 
   // Wait for client-side hydration to avoid mismatch
   if (!isClient) {
