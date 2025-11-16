@@ -300,6 +300,44 @@ export default function FinderWindow({ window }: FinderWindowProps) {
     updateDailyStreaksIfNeeded,
   ]);
 
+  // Resize and center window when About tab becomes active
+  useEffect(() => {
+    const contentKey = ((): string | undefined => {
+      if (window.type === "finder" && window.tabs && window.activeTabId) {
+        const t = window.tabs.find((t) => t.id === window.activeTabId);
+        if (t) return t.content;
+      }
+      return window.content;
+    })();
+    if (contentKey === "about" && typeof globalThis !== "undefined" && globalThis.window) {
+      const screenWidth = globalThis.window.innerWidth;
+      const screenHeight = globalThis.window.innerHeight;
+      const desiredWidth = Math.min(900, screenWidth - 100);
+      const desiredHeight = Math.min(1050, screenHeight - 80);
+      const centeredX = Math.max(0, (screenWidth - desiredWidth) / 2);
+      const centeredY = Math.max(0, (screenHeight - desiredHeight) / 2);
+
+      if (window.width !== desiredWidth || window.height !== desiredHeight) {
+        updateWindowSize(window.id, desiredWidth, desiredHeight);
+      }
+      if (window.x !== centeredX || window.y !== centeredY) {
+        updateWindowPosition(window.id, centeredX, centeredY);
+      }
+    }
+  }, [
+    window.activeTabId,
+    window.tabs,
+    window.content,
+    window.type,
+    window.id,
+    window.width,
+    window.height,
+    window.x,
+    window.y,
+    updateWindowSize,
+    updateWindowPosition,
+  ]);
+
   // Tabs are created only when clicking items; no auto-creation on load
 
   // Ensure Projects window opens taller
