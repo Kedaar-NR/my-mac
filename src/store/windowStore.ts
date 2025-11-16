@@ -55,12 +55,27 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
 
         if (existing) {
             // Restore if minimized and bring to front
+            // For about_me, also update position and size to center it
+            const isAboutMe = windowData.content === 'about';
+            const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1920;
+            const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 1080;
+
             set((s) => ({
-                windows: s.windows.map((w) =>
-                    w.id === existing.id
-                        ? { ...w, isMinimized: false, isOpen: true, zIndex: s.nextZIndex }
-                        : w
-                ),
+                windows: s.windows.map((w) => {
+                    if (w.id === existing.id) {
+                        const updated = { ...w, isMinimized: false, isOpen: true, zIndex: s.nextZIndex };
+                        if (isAboutMe) {
+                            const maxWidth = Math.min(900, screenWidth - 100);
+                            const maxHeight = Math.min(1050, screenHeight - 80);
+                            updated.width = maxWidth;
+                            updated.height = maxHeight;
+                            updated.x = Math.max(0, (screenWidth - maxWidth) / 2);
+                            updated.y = Math.max(0, (screenHeight - maxHeight) / 2);
+                        }
+                        return updated;
+                    }
+                    return w;
+                }),
                 activeWindowId: existing.id,
                 nextZIndex: s.nextZIndex + 1,
             }));
