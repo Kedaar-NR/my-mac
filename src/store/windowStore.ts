@@ -88,7 +88,13 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
         const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1920;
         const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 1080;
         const maxWidth = Math.min(900, screenWidth - 100);
-        const maxHeight = isAboutMe ? Math.min(850, screenHeight - 100) : Math.min(700, screenHeight - 150);
+        const maxHeight = isAboutMe ? Math.min(1050, screenHeight - 80) : Math.min(700, screenHeight - 150);
+
+        // For about_me, center the window perfectly
+        const windowWidth = windowData.type === 'finder' ? maxWidth : Math.min(600, screenWidth - 200);
+        const windowHeight = windowData.type === 'finder' ? maxHeight : Math.min(500, screenHeight - 200);
+        const x = isAboutMe ? Math.max(0, (screenWidth - windowWidth) / 2) : (isMarkdown ? 200 + (state.windows.length * 30) : 150 + (state.windows.length * 30));
+        const y = isAboutMe ? Math.max(0, (screenHeight - windowHeight) / 2) : (isMarkdown ? 120 + (state.windows.length * 30) : 80 + (state.windows.length * 30));
 
         const newWindow: Window = {
             ...windowData,
@@ -96,10 +102,10 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
             isOpen: true,
             isMinimized: false,
             isMaximized: false,
-            x: isMarkdown ? 200 + (state.windows.length * 30) : 150 + (state.windows.length * 30),
-            y: isMarkdown ? 120 + (state.windows.length * 30) : 80 + (state.windows.length * 30),
-            width: windowData.type === 'finder' ? maxWidth : Math.min(600, screenWidth - 200),
-            height: windowData.type === 'finder' ? maxHeight : Math.min(500, screenHeight - 200),
+            x,
+            y,
+            width: windowWidth,
+            height: windowHeight,
             zIndex: state.nextZIndex,
             tabs: [],
             activeTabId: undefined,
