@@ -1070,6 +1070,13 @@ export default function FinderWindow({ window }: FinderWindowProps) {
       case "entrepreneurship":
         return renderItems("Entrepreneurship", [
           {
+            name: "TradeForm.txt",
+            key: "tradeform-txt",
+            kind: "txt",
+            date: "Nov 10, 2025",
+            size: "5 KB",
+          },
+          {
             name: "FashionWeek.txt",
             key: "fashionweek-txt",
             kind: "txt",
