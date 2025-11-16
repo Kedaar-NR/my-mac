@@ -1231,7 +1231,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                 autism. 2,000+ clinic testimonials.
               </p>
               <p>
-                1st out of 3,000 in the world's most competitive youth
+                1st out of 3,000 in the world&apos;s most competitive youth
                 entrepreneurship competition.
               </p>
             </div>
