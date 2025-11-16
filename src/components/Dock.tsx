@@ -150,6 +150,16 @@ export default function Dock() {
       isActive: true,
     },
     {
+      iconSrc: "/images/mail.png",
+      label: "Mail",
+      isActive: true,
+      onClick: () => {
+        if (typeof window !== "undefined") {
+          window.location.href = "mailto:kedaarnr@berkeley.edu";
+        }
+      },
+    },
+    {
       iconSrc: "/images/music.jpeg",
       label: "Messages",
       isActive: true,
