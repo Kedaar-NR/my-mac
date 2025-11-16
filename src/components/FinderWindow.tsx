@@ -1111,6 +1111,13 @@ export default function FinderWindow({ window }: FinderWindowProps) {
       case "research":
         return renderItems("Research", [
           {
+            name: "StanfordHealthCare.txt",
+            key: "stanford-healthcare-txt",
+            kind: "txt",
+            date: "Jun 01, 2025",
+            size: "7 KB",
+          },
+          {
             name: "BAIR.txt",
             key: "bair-txt",
             kind: "txt",
