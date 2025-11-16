@@ -1167,6 +1167,20 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             </div>
           </div>
         );
+      case "tradeform-txt":
+        return (
+          <div className="p-6 bg-white text-black font-sans min-h-full">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              TradeForm.txt
+            </h2>
+            <div className="space-y-2 text-gray-800">
+              <p>
+                Automating busywork for engineers to help them focus on building
+                what matters.
+              </p>
+            </div>
+          </div>
+        );
       case "omnicreate-txt":
         return (
           <div className="p-6 bg-white text-black font-sans min-h-full">
@@ -1179,7 +1193,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                 autism. 2,000+ clinic testimonials.
               </p>
               <p>
-                1st out of 3,000 in the world’s most competitive youth
+                1st out of 3,000 in the world's most competitive youth
                 entrepreneurship competition.
               </p>
             </div>
