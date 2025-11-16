@@ -1053,13 +1053,6 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             size: "4 KB",
           },
           {
-            name: "StanfordHealthCare.txt",
-            key: "stanford-healthcare-txt",
-            kind: "txt",
-            date: "Jun 01, 2025",
-            size: "7 KB",
-          },
-          {
             name: "VariousCompanies.txt",
             key: "various-companies-txt",
             kind: "txt",
