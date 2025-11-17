@@ -3,7 +3,7 @@ import { create } from 'zustand'
 export interface Window {
     id: string
     title: string
-    type: 'finder' | 'mail' | 'portfolio'
+    type: 'finder' | 'mail' | 'portfolio' | 'safari'
     isOpen: boolean
     isMinimized: boolean
     isMaximized: boolean
@@ -84,17 +84,30 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
 
         const isAboutMe = windowData.content === 'about';
         const isMarkdown = windowData.content === 'markdown-placeholder';
+        const isSafari = windowData.type === 'safari';
         // Calculate window dimensions to fit screen
         const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1920;
         const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 1080;
         const maxWidth = Math.min(900, screenWidth - 100);
         const maxHeight = isAboutMe ? Math.min(1050, screenHeight - 80) : Math.min(700, screenHeight - 150);
 
-        // For about_me, center the window perfectly
-        const windowWidth = windowData.type === 'finder' ? maxWidth : Math.min(600, screenWidth - 200);
-        const windowHeight = windowData.type === 'finder' ? maxHeight : Math.min(500, screenHeight - 200);
-        const x = isAboutMe ? Math.max(0, (screenWidth - windowWidth) / 2) : (isMarkdown ? 200 + (state.windows.length * 30) : 150 + (state.windows.length * 30));
-        const y = isAboutMe ? Math.max(0, (screenHeight - windowHeight) / 2) : (isMarkdown ? 120 + (state.windows.length * 30) : 80 + (state.windows.length * 30));
+        // For about_me and safari, use larger window size
+        let windowWidth = windowData.type === 'finder' ? maxWidth : Math.min(600, screenWidth - 200);
+        let windowHeight = windowData.type === 'finder' ? maxHeight : Math.min(500, screenHeight - 200);
+
+        // Safari windows should be same size as about_me
+        if (isSafari) {
+            windowWidth = Math.min(900, screenWidth - 100);
+            windowHeight = Math.min(1050, screenHeight - 80);
+        }
+
+        let x = (isAboutMe || isSafari) ? Math.max(0, (screenWidth - windowWidth) / 2) : (isMarkdown ? 200 + (state.windows.length * 30) : 150 + (state.windows.length * 30));
+        const y = (isAboutMe || isSafari) ? Math.max(0, (screenHeight - windowHeight) / 2) : (isMarkdown ? 120 + (state.windows.length * 30) : 80 + (state.windows.length * 30));
+
+        // Safari should open a little to the right of center
+        if (isSafari) {
+            x = Math.min(x + 100, screenWidth - windowWidth - 50);
+        }
 
         const newWindow: Window = {
             ...windowData,
