@@ -45,7 +45,7 @@ function DockIcon({
       transition={{ type: "spring", stiffness: 500, damping: 25 }}
       onClick={handleClick}
       className={`relative group flex flex-col items-center ${
-        isMinimizedWindow ? "cursor-pointer" : "cursor-default"
+        isMinimizedWindow || onClick ? "cursor-pointer" : "cursor-default"
       }`}
       title={label}
       aria-label={label}
@@ -114,14 +114,14 @@ function DockIcon({
           </svg>
         </div>
       ) : iconSrc ? (
-        <div className="w-16 h-16 rounded-[22%] overflow-hidden shadow-2xl">
+        <div className="w-16 h-16 relative flex items-center justify-center overflow-hidden rounded-[22%]">
           <Image
             src={iconSrc}
             alt={label}
-            width={64}
-            height={64}
+            width={80}
+            height={80}
             loading="lazy"
-            className="w-full h-full object-cover"
+            className="w-20 h-20 object-contain"
           />
         </div>
       ) : null}
@@ -132,7 +132,11 @@ function DockIcon({
   );
 }
 
-export default function Dock() {
+interface DockProps {
+  onLaunchpadClick?: () => void;
+}
+
+export default function Dock({ onLaunchpadClick }: DockProps) {
   const { windows, openWindow } = useWindowStore();
 
   const dockApps = [
@@ -148,9 +152,12 @@ export default function Dock() {
       iconSrc: "/images/safari.jpeg",
       label: "Safari",
       isActive: true,
+      onClick: () => {
+        openWindow({ title: "Safari", type: "safari", content: "browser" });
+      },
     },
     {
-      iconSrc: "/images/mail.png",
+      iconSrc: "/images/mail.jpeg",
       label: "Mail",
       isActive: true,
       onClick: () => {
@@ -160,12 +167,11 @@ export default function Dock() {
       },
     },
     {
-      iconSrc: "/images/music.jpeg",
+      iconSrc: "/images/messages.jpeg",
       label: "Messages",
       isActive: true,
       onClick: () => {
         if (typeof window !== "undefined") {
-          // Attempt to open iMessage with prefilled number
           window.location.href = "sms:6506607341";
         }
       },
@@ -181,14 +187,15 @@ export default function Dock() {
       },
     },
     {
-      iconSrc: "/images/apple-music.jpeg",
-      label: "Apple Music",
+      iconSrc: "/images/textedit.jpeg",
+      label: "TextEdit",
       isActive: true,
     },
     {
       iconSrc: "/images/launchpad.jpeg",
       label: "Launchpad",
       isActive: true,
+      onClick: onLaunchpadClick,
     },
   ];
 
