@@ -8,6 +8,8 @@ import Dock from "./Dock";
 import FinderWindow from "./FinderWindow";
 import MailWindow from "./MailWindow";
 import PortfolioWindow from "./PortfolioWindow";
+import SafariWindow from "./SafariWindow";
+import Launchpad from "./Launchpad";
 import { AILoader } from "./ui/ai-loader";
 
 export default function Desktop() {
@@ -16,6 +18,7 @@ export default function Desktop() {
   const [isMobile, setIsMobile] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLaunchpadOpen, setIsLaunchpadOpen] = useState(false);
 
   // Detect mobile on client side only
   useEffect(() => {
@@ -104,7 +107,10 @@ export default function Desktop() {
         {!isLoading && <DesktopIcons />}
 
         {/* Dock - only show after loading */}
-        {!isLoading && <Dock />}
+        {!isLoading && <Dock onLaunchpadClick={() => setIsLaunchpadOpen(true)} />}
+
+        {/* Launchpad */}
+        <Launchpad isOpen={isLaunchpadOpen} onClose={() => setIsLaunchpadOpen(false)} />
 
         {/* Windows */}
         {windows.map((window) => {
@@ -121,6 +127,8 @@ export default function Desktop() {
               return <MailWindow key={window.id} {...commonProps} />;
             case "portfolio":
               return <PortfolioWindow key={window.id} {...commonProps} />;
+            case "safari":
+              return <SafariWindow key={window.id} {...commonProps} />;
             default:
               return null;
           }
