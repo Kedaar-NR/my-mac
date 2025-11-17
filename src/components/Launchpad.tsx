@@ -122,7 +122,7 @@ export default function Launchpad({ isOpen, onClose }: LaunchpadProps) {
                   onClick={app.onClick}
                   className="flex flex-col items-center gap-2 group"
                 >
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 group-hover:shadow-xl transition-shadow">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden group-hover:shadow-xl transition-shadow">
                     <Image
                       src={app.icon}
                       alt={app.name}
