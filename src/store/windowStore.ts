@@ -97,7 +97,7 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
 
         // Safari windows should be same size as about_me
         if (isSafari) {
-            windowWidth = Math.min(900, screenWidth - 100);
+            windowWidth = Math.min(1000, screenWidth - 100);
             windowHeight = Math.min(1050, screenHeight - 80);
         }
 
