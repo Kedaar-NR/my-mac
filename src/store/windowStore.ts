@@ -1,5 +1,13 @@
 import { create } from 'zustand'
 
+// Helper to safely get window dimensions
+const getWindowDimensions = () => {
+    if (typeof window === 'undefined') {
+        return { width: 1920, height: 1080 };
+    }
+    return { width: window.innerWidth, height: window.innerHeight };
+}
+
 export interface Window {
     id: string
     title: string
@@ -57,8 +65,7 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
             // Restore if minimized and bring to front
             // For about_me, also update position and size to center it
             const isAboutMe = windowData.content === 'about';
-            const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1920;
-            const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 1080;
+            const { width: screenWidth, height: screenHeight } = getWindowDimensions();
 
             set((s) => ({
                 windows: s.windows.map((w) => {
@@ -86,8 +93,7 @@ export const useWindowStore = create<WindowStore>((set, get) => ({
         const isMarkdown = windowData.content === 'markdown-placeholder';
         const isSafari = windowData.type === 'safari';
         // Calculate window dimensions to fit screen
-        const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1920;
-        const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 1080;
+        const { width: screenWidth, height: screenHeight } = getWindowDimensions();
         const maxWidth = Math.min(900, screenWidth - 100);
         const maxHeight = isAboutMe ? Math.min(1050, screenHeight - 80) : Math.min(700, screenHeight - 150);
 
