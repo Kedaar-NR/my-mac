@@ -152,6 +152,12 @@ export default function DesktopIcons() {
           position={{ x: 0, y: 0 }}
         />
         <DesktopIcon
+          label="Side Hustles"
+          onClick={() => open("Side Hustles", "side-hustles")}
+          icon={<div />}
+          position={{ x: 0, y: 0 }}
+        />
+        <DesktopIcon
           label="Essays"
           onClick={() => open("Essays", "essays")}
           icon={<div />}

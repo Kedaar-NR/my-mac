@@ -753,6 +753,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                 { name: "Venture", content: "venture", isFile: false },
                 { name: "Work", content: "work", isFile: false },
                 { name: "Projects", content: "projects", isFile: false },
+                { name: "Side Hustles", content: "side-hustles", isFile: false },
                 { name: "Essays", content: "essays", isFile: false },
               ].map((item, index) => (
                 <div
@@ -1004,39 +1005,37 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             "GTC",
             "fashion-week",
           ];
-          return renderItems(
-            "Projects",
-            staticRepoNames.map((name) => {
-              const lower = name.toLowerCase();
-              let languages: string[];
-              if (
-                lower.includes("ml") ||
-                lower.includes("ai") ||
-                lower.includes("bot") ||
-                lower.includes("rank")
-              ) {
-                languages = ["Python"];
-              } else if (
-                lower.includes("mac") ||
-                lower.includes("civic") ||
-                lower.includes("query") ||
-                lower.includes("hacks") ||
-                lower.includes("week")
-              ) {
-                languages = ["TypeScript"];
-              } else {
-                languages = ["TypeScript", "Python"];
-              }
-              return {
-                name,
-                key: `https://github.com/kedaar-nr/${name}`,
-                kind: "txt" as const,
-                date: "Sep 2025",
-                kindLabel: languages.join(", "),
-                languages,
-              };
-            })
-          );
+          const projectItems: Item[] = staticRepoNames.map((name) => {
+            const lower = name.toLowerCase();
+            let languages: string[];
+            if (
+              lower.includes("ml") ||
+              lower.includes("ai") ||
+              lower.includes("bot") ||
+              lower.includes("rank")
+            ) {
+              languages = ["Python"];
+            } else if (
+              lower.includes("mac") ||
+              lower.includes("civic") ||
+              lower.includes("query") ||
+              lower.includes("hacks") ||
+              lower.includes("week")
+            ) {
+              languages = ["TypeScript"];
+            } else {
+              languages = ["TypeScript", "Python"];
+            }
+            return {
+              name,
+              key: `https://github.com/kedaar-nr/${name}`,
+              kind: "txt",
+              date: "Sep 2025",
+              kindLabel: languages.join(", "),
+              languages,
+            };
+          });
+          return renderItems("Projects", projectItems);
         }
         if (!loading && repos.length === 0) {
           return (
@@ -1056,16 +1055,37 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             </div>
           );
         }
-        return renderItems(
-          "Projects",
-          repos.map((repo) => ({
-            name: repo.name,
-            key: repo.html_url,
-            kind: "txt" as const,
-            date: new Date(repo.updated_at).toLocaleDateString(),
-            size: repo.stargazers_count ? `${repo.stargazers_count}★` : "",
-            kindLabel: repo.language || "—",
-          }))
+        const repoItems: Item[] = repos.map((repo) => ({
+          name: repo.name,
+          key: repo.html_url,
+          kind: "txt",
+          date: new Date(repo.updated_at).toLocaleDateString(),
+          size: repo.stargazers_count ? `${repo.stargazers_count}★` : "",
+          kindLabel: repo.language || "—",
+        }));
+        return renderItems("Projects", repoItems);
+      case "side-hustles":
+        return renderItems("Side Hustles", [
+          {
+            name: "Consulting.txt",
+            key: "consulting-txt",
+            kind: "txt",
+            date: "Nov 2025",
+            size: "2 KB",
+          },
+        ]);
+      case "consulting-txt":
+        return (
+          <div className="p-6 bg-white text-black font-sans min-h-full">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              Consulting.txt
+            </h2>
+            <div className="space-y-2 text-gray-800">
+              <p>
+                Consulting work and client projects.
+              </p>
+            </div>
+          </div>
         );
       case "work":
         return renderItems("Work", [
