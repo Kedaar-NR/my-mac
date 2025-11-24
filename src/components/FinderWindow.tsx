@@ -309,7 +309,11 @@ export default function FinderWindow({ window }: FinderWindowProps) {
       }
       return window.content;
     })();
-    if (contentKey === "about" && typeof globalThis !== "undefined" && globalThis.window) {
+    if (
+      contentKey === "about" &&
+      typeof globalThis !== "undefined" &&
+      globalThis.window
+    ) {
       const screenWidth = globalThis.window.innerWidth;
       const screenHeight = globalThis.window.innerHeight;
       const desiredWidth = Math.min(900, screenWidth - 100);
@@ -748,17 +752,21 @@ export default function FinderWindow({ window }: FinderWindowProps) {
             <div className="flex flex-col">
               {[
                 { name: "about_me.txt", content: "about", isFile: true },
-                { name: "Entrepreneurship", content: "entrepreneurship", isFile: false },
+                {
+                  name: "Entrepreneurship",
+                  content: "entrepreneurship",
+                  isFile: false,
+                },
                 { name: "Research", content: "research", isFile: false },
-                { name: "Venture", content: "venture", isFile: false },
-                { name: "Work", content: "work", isFile: false },
+                { name: "Jobs", content: "work", isFile: false },
                 { name: "Projects", content: "projects", isFile: false },
-                { name: "Side Hustles", content: "side-hustles", isFile: false },
                 { name: "Essays", content: "essays", isFile: false },
               ].map((item, index) => (
                 <div
                   key={index}
-                  onClick={() => openOrFocusTab(window.id, item.name, item.content)}
+                  onClick={() =>
+                    openOrFocusTab(window.id, item.name, item.content)
+                  }
                   className="flex items-center gap-3 px-4 py-2 hover:bg-blue-50 cursor-pointer border-b border-gray-100"
                 >
                   {item.isFile ? (
@@ -769,7 +777,10 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path d="M14 6 L42 6 L52 16 L52 58 L14 58 Z" fill="#FFFFFF" />
+                      <path
+                        d="M14 6 L42 6 L52 16 L52 58 L14 58 Z"
+                        fill="#FFFFFF"
+                      />
                       <path d="M42 6 L42 16 L52 16 Z" fill="#E0E0E0" />
                       <path
                         d="M14 6 L42 6 L52 16 L52 58 L14 58 Z M42 6 L42 16 L52 16"
@@ -805,8 +816,14 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                           x2="0%"
                           y2="100%"
                         >
-                          <stop offset="0%" style={{ stopColor: "#6DB3E8", stopOpacity: 1 }} />
-                          <stop offset="100%" style={{ stopColor: "#4A9CD9", stopOpacity: 1 }} />
+                          <stop
+                            offset="0%"
+                            style={{ stopColor: "#6DB3E8", stopOpacity: 1 }}
+                          />
+                          <stop
+                            offset="100%"
+                            style={{ stopColor: "#4A9CD9", stopOpacity: 1 }}
+                          />
                         </linearGradient>
                       </defs>
                       <path
@@ -820,7 +837,9 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                       />
                     </svg>
                   )}
-                  <span className="text-sm font-medium text-gray-900">{item.name}</span>
+                  <span className="text-sm font-medium text-gray-900">
+                    {item.name}
+                  </span>
                 </div>
               ))}
             </div>
@@ -1081,14 +1100,20 @@ export default function FinderWindow({ window }: FinderWindowProps) {
               Consulting.txt
             </h2>
             <div className="space-y-2 text-gray-800">
-              <p>
-                Consulting work and client projects.
-              </p>
+              <p>Consulting work and client projects.</p>
             </div>
           </div>
         );
       case "work":
-        return renderItems("Work", [
+        return renderItems("Jobs", [
+          {
+            name: "Side Hustles",
+            key: "side-hustles",
+            kind: "folder",
+            date: "—",
+            size: "—",
+            kindLabel: "Folder",
+          },
           {
             name: "MagicHour.txt",
             key: "magichour-txt",
@@ -1120,6 +1145,14 @@ export default function FinderWindow({ window }: FinderWindowProps) {
         ]);
       case "entrepreneurship":
         return renderItems("Entrepreneurship", [
+          {
+            name: "Venture",
+            key: "venture",
+            kind: "folder",
+            date: "—",
+            size: "—",
+            kindLabel: "Folder",
+          },
           {
             name: "TradeForm.txt",
             key: "tradeform-txt",
