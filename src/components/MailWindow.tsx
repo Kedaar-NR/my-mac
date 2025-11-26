@@ -117,7 +117,7 @@ export default function MailWindow({ window }: MailWindowProps) {
           </div>
 
           <div className="flex items-center space-x-2">
-            <button className="p-1 hover:bg-gray-image.png200 rounded">
+            <button className="p-1 hover:bg-gray-200 rounded text-black">
               <Bold size={16} />
             </button>
             <button className="p-1 hover:bg-gray-200 rounded">
@@ -216,7 +216,7 @@ export default function MailWindow({ window }: MailWindowProps) {
               <div className="flex justify-end space-x-3">
                 <button
                   type="button"
-                  className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                  className="px-4 py-2 text-black hover:text-black transition-colors"
                 >
                   Cancel
                 </button>

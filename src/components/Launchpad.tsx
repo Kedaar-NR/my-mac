@@ -54,7 +54,10 @@ export default function Launchpad({ isOpen, onClose }: LaunchpadProps) {
       icon: "/images/spotify.jpeg",
       onClick: () => {
         if (typeof window !== "undefined") {
-          window.open("https://open.spotify.com/user/dnm1bxd8ubssltoz7dkczz2tt", "_blank");
+          window.open(
+            "https://open.spotify.com/user/dnm1bxd8ubssltoz7dkczz2tt",
+            "_blank"
+          );
         }
         onClose();
       },
@@ -94,19 +97,31 @@ export default function Launchpad({ isOpen, onClose }: LaunchpadProps) {
             {/* Header */}
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
-                <svg className="w-6 h-6 text-gray-700" viewBox="0 0 24 24" fill="currentColor">
+                <svg
+                  className="w-6 h-6 text-gray-700"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
                   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                 </svg>
                 <h1 className="text-2xl font-medium text-gray-800">Apps</h1>
               </div>
-              <button className="flex items-center gap-1 text-gray-600 hover:text-gray-800 transition-colors">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+              <button className="flex items-center gap-1 text-black hover:text-black transition-colors">
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
                   <rect x="3" y="3" width="7" height="7" rx="1.5" />
                   <rect x="14" y="3" width="7" height="7" rx="1.5" />
                   <rect x="3" y="14" width="7" height="7" rx="1.5" />
                   <rect x="14" y="14" width="7" height="7" rx="1.5" />
                 </svg>
-                <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                <svg
+                  className="w-3 h-3"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
                   <path d="M7 10l5 5 5-5z" />
                 </svg>
               </button>
