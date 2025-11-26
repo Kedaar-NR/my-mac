@@ -117,7 +117,7 @@ export default function MailWindow({ window }: MailWindowProps) {
           </div>
 
           <div className="flex items-center space-x-2">
-            <button className="p-1 hover:bg-gray-200 rounded">
+            <button className="p-1 hover:bg-gray-image.png200 rounded">
               <Bold size={16} />
             </button>
             <button className="p-1 hover:bg-gray-200 rounded">

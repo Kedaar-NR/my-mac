@@ -1719,7 +1719,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
               {(window.tabs ?? []).map((t) => (
                 <div
                   key={t.id}
-                  className={`flex items-center max-w-xs pl-3 pr-2 h-7 rounded-md border text-xs cursor-pointer select-none ${
+                  className={`flex items-center max-w-xs pl-3 pr-2 h-7 rounded-md border text-xs cursor-pointer select-none text-black ${
                     window.activeTabId === t.id
                       ? "bg-white border-gray-300 shadow-sm"
                       : "bg-gray-100 border-gray-200 hover:bg-gray-200"
@@ -1727,9 +1727,9 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                   onClick={() => setActiveTab(window.id, t.id)}
                   title={t.title}
                 >
-                  <span className="truncate mr-2">{t.title}</span>
+                  <span className="truncate mr-2 text-black">{t.title}</span>
                   <button
-                    className="w-4 h-4 flex items-center justify-center rounded hover:bg-gray-300/60"
+                    className="w-4 h-4 flex items-center justify-center rounded hover:bg-gray-300/60 text-black"
                     onClick={(e) => {
                       e.stopPropagation();
                       closeTab(window.id, t.id);
