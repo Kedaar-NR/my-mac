@@ -98,7 +98,7 @@ function DesktopIcon({ label, onClick }: DesktopIconProps) {
         )}
         {/* Removed overlay glyphs per request */}
       </div>
-      <span className="text-white text-sm font-bold text-center w-24 leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] -mt-1">
+      <span className="text-black text-sm font-bold text-center w-24 leading-tight drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)] -mt-1">
         {label}
       </span>
     </motion.button>

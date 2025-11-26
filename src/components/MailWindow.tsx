@@ -108,7 +108,7 @@ export default function MailWindow({ window }: MailWindowProps) {
         {/* Toolbar */}
         <div className="h-12 bg-gray-50 border-b border-gray-200 flex items-center justify-between px-4">
           <div className="flex items-center space-x-2">
-            <button className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+            <button className="p-2 bg-blue-500 text-black rounded-lg hover:bg-blue-600 transition-colors">
               <Send size={16} />
             </button>
             <button className="p-2 hover:bg-gray-200 rounded-lg">
@@ -146,7 +146,7 @@ export default function MailWindow({ window }: MailWindowProps) {
                 <div className="bg-blue-50 p-6 rounded-lg">
                   <div className="flex items-center justify-center space-x-3 mb-4">
                     <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xl">@</span>
+                      <span className="text-black text-xl">@</span>
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800">
@@ -222,7 +222,7 @@ export default function MailWindow({ window }: MailWindowProps) {
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                  className="px-6 py-2 bg-blue-500 text-black rounded-lg hover:bg-blue-600 transition-colors"
                 >
                   Send Message
                 </button>

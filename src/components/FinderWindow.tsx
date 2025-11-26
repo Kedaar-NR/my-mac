@@ -1066,7 +1066,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                 </p>
                 <button
                   onClick={() => setReloadKey((k) => k + 1)}
-                  className="px-3 py-1.5 rounded-md bg-blue-600 text-white hover:bg-blue-700"
+                  className="px-3 py-1.5 rounded-md bg-blue-600 text-black hover:bg-blue-700"
                 >
                   Retry
                 </button>
@@ -1616,7 +1616,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                 className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
               >
                 <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold">L</span>
+                  <span className="text-black font-bold">L</span>
                 </div>
                 <span className="text-blue-800">LinkedIn</span>
               </a>
@@ -1625,7 +1625,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                 className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
               >
                 <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold">G</span>
+                  <span className="text-black font-bold">G</span>
                 </div>
                 <span className="text-gray-800">GitHub</span>
               </a>
@@ -1634,7 +1634,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                 className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
               >
                 <div className="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold">T</span>
+                  <span className="text-black font-bold">T</span>
                 </div>
                 <span className="text-blue-800">Twitter</span>
               </a>
