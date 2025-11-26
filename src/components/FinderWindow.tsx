@@ -597,7 +597,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                         href={it.key}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 group-hover:underline cursor-pointer"
+                        className="text-black group-hover:underline cursor-pointer"
                       >
                         {it.name}
                       </a>
@@ -680,7 +680,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                         </span>
                       )}
                     </div>
-                    <span className="text-gray-800">{it.name}</span>
+                    <span className="text-black">{it.name}</span>
                   </div>
                   <div className="col-span-3 text-gray-600">
                     {it.date || "—"}
@@ -724,7 +724,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                     </>
                   )}
                 </div>
-                <span className="text-gray-800 text-sm font-semibold text-center">
+                <span className="text-black text-sm font-semibold text-center">
                   {it.name}
                 </span>
               </button>
@@ -837,7 +837,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                       />
                     </svg>
                   )}
-                  <span className="text-sm font-medium text-gray-900">
+                  <span className="text-sm font-medium text-black">
                     {item.name}
                   </span>
                 </div>
@@ -914,7 +914,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
               <div className="text-center mb-10">
                 <a
                   href="mailto:kedaarnr@berkeley.edu"
-                  className="text-lg text-gray-700 hover:text-green-600 transition-colors"
+                  className="text-lg text-black hover:text-green-600 transition-colors"
                 >
                   kedaarnr@berkeley.edu
                 </a>
