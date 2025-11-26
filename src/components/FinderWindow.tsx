@@ -706,7 +706,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
               <button
                 key={it.key}
                 onClick={() => openItem(it)}
-                className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-gray-100 transition-colors"
+                className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-gray-100 transition-colors text-black"
               >
                 <div className="relative w-24 h-24 flex items-center justify-center">
                   {_heading === "Projects" ? (
@@ -1706,9 +1706,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
               className="w-3 h-3 bg-green-500 rounded-full hover:bg-green-600 transition-colors"
             />
           </div>
-          <div className="text-sm font-medium text-gray-700">
-            {window.title}
-          </div>
+          <div className="text-sm font-medium text-black">{window.title}</div>
           <div className="w-16" /> {/* Spacer for centering */}
         </div>
 
@@ -1747,10 +1745,10 @@ export default function FinderWindow({ window }: FinderWindowProps) {
         {/* Toolbar */}
         <div className="h-12 bg-gray-50 border-b border-gray-200 flex items-center justify-between px-4">
           <div className="flex items-center space-x-2">
-            <button className="p-1 hover:bg-gray-200 rounded">
+            <button className="p-1 hover:bg-gray-200 rounded text-black">
               <ChevronLeft size={16} />
             </button>
-            <button className="p-1 hover:bg-gray-200 rounded">
+            <button className="p-1 hover:bg-gray-200 rounded text-black">
               <ChevronRight size={16} />
             </button>
             <div className="w-px h-6 bg-gray-300 mx-2" />
@@ -1760,7 +1758,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                 className={`p-1 rounded ${
                   viewMode === "grid"
                     ? "bg-blue-100 text-blue-600"
-                    : "hover:bg-gray-200"
+                    : "hover:bg-gray-200 text-black"
                 }`}
               >
                 <Grid3X3 size={16} />
@@ -1770,7 +1768,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                 className={`p-1 rounded ${
                   viewMode === "list"
                     ? "bg-blue-100 text-blue-600"
-                    : "hover:bg-gray-200"
+                    : "hover:bg-gray-200 text-black"
                 }`}
               >
                 <List size={16} />
@@ -1780,7 +1778,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                 className={`p-1 rounded ${
                   viewMode === "columns"
                     ? "bg-blue-100 text-blue-600"
-                    : "hover:bg-gray-200"
+                    : "hover:bg-gray-200 text-black"
                 }`}
               >
                 <Columns size={16} />
@@ -1799,19 +1797,19 @@ export default function FinderWindow({ window }: FinderWindowProps) {
                 className="ml-2 outline-none text-sm"
               />
             </div>
-            <button className="p-1 hover:bg-gray-200 rounded">
+            <button className="p-1 hover:bg-gray-200 rounded text-black">
               <Sidebar size={16} />
             </button>
-            <button className="p-1 hover:bg-gray-200 rounded">
+            <button className="p-1 hover:bg-gray-200 rounded text-black">
               <Eye size={16} />
             </button>
-            <button className="p-1 hover:bg-gray-200 rounded">
+            <button className="p-1 hover:bg-gray-200 rounded text-black">
               <Share size={16} />
             </button>
-            <button className="p-1 hover:bg-gray-200 rounded">
+            <button className="p-1 hover:bg-gray-200 rounded text-black">
               <Tag size={16} />
             </button>
-            <button className="p-1 hover:bg-gray-200 rounded">
+            <button className="p-1 hover:bg-gray-200 rounded text-black">
               <MoreHorizontal size={16} />
             </button>
           </div>
