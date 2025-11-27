@@ -170,6 +170,7 @@ This project is optimized for deployment on Vercel:
 
 Vercel will automatically detect the Next.js configuration and deploy your site.
 
+
 ## Performance
 
 - **First Load JS**: 179 KB (optimized)
