@@ -197,6 +197,8 @@ Tested and working on:
 
 Built with inspiration from the macOS design language and user interface patterns.
 
+Note: This project is actively maintained.
+
 ## License
 
 MIT License - feel free to use this project as a template for your own portfolio.
