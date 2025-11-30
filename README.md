@@ -192,6 +192,7 @@ Tested and working on:
 - Include research publications
 - Create more interactive elements
 - Add keyboard shortcuts
+- Improve accessibility features
 
 ## Acknowledgments
 
