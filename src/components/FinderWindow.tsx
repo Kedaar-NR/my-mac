@@ -103,10 +103,10 @@ export default function FinderWindow({ window }: FinderWindowProps) {
   const [loading, setLoading] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
   const [streaks, setStreaks] = useState({
-    calories: 955,
-    typing: 170,
-    pushups: 386,
-    commits: 120,
+    calories: 1005,
+    typing: 180,
+    pushups: 410,
+    commits: 150,
   });
   // Optional GitHub token to avoid rate limits (set NEXT_PUBLIC_GITHUB_TOKEN)
   const githubToken =
@@ -150,10 +150,10 @@ export default function FinderWindow({ window }: FinderWindowProps) {
         if (!prevRaw || isNaN(prev.getTime())) {
           // Normalize stored object to include a valid lastUpdated without altering counts
           const normalized = {
-            calories: parsed.calories ?? 955,
-            typing: parsed.typing ?? 170,
-            pushups: parsed.pushups ?? 386,
-            commits: parsed.commits ?? 120,
+            calories: parsed.calories ?? 1005,
+            typing: parsed.typing ?? 180,
+            pushups: parsed.pushups ?? 410,
+            commits: parsed.commits ?? 150,
             lastUpdated: todayLocalMidnight.toISOString(),
           };
           setStreaks({
@@ -192,10 +192,10 @@ export default function FinderWindow({ window }: FinderWindowProps) {
         }
       } else {
         const initial = {
-          calories: 955,
-          typing: 170,
-          pushups: 386,
-          commits: 120,
+          calories: 1005,
+          typing: 180,
+          pushups: 410,
+          commits: 150,
           lastUpdated: todayLocalMidnight.toISOString(),
         };
         setStreaks(initial);
