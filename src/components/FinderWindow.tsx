@@ -102,12 +102,15 @@ export default function FinderWindow({ window }: FinderWindowProps) {
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
-  const STREAK_BASE = {
-    calories: 1005,
-    typing: 180,
-    pushups: 410,
-    commits: 150,
-  };
+  const STREAK_BASE = useMemo(
+    () => ({
+      calories: 1005,
+      typing: 180,
+      pushups: 410,
+      commits: 150,
+    }),
+    []
+  );
   const STREAK_BASE_DATE = "2025-12-09T00:00:00Z"; // reference point; counts grow daily from here
 
   const [streaks, setStreaks] = useState(STREAK_BASE);
