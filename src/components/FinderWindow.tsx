@@ -102,12 +102,15 @@ export default function FinderWindow({ window }: FinderWindowProps) {
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
-  const [streaks, setStreaks] = useState({
+  const STREAK_BASE = {
     calories: 1005,
     typing: 180,
     pushups: 410,
     commits: 150,
-  });
+  };
+  const STREAK_BASE_DATE = "2025-12-09T00:00:00Z"; // reference point; counts grow daily from here
+
+  const [streaks, setStreaks] = useState(STREAK_BASE);
   // Optional GitHub token to avoid rate limits (set NEXT_PUBLIC_GITHUB_TOKEN)
   const githubToken =
     typeof process !== "undefined"
@@ -135,6 +138,22 @@ export default function FinderWindow({ window }: FinderWindowProps) {
       const STORAGE_KEY = "kedaar_streaks_v1";
       const todayLocalMidnight = toLocalMidnight(new Date());
 
+      // Compute a baseline that advances automatically by day even on fresh loads
+      const baselineDateLocal = toLocalMidnight(new Date(STREAK_BASE_DATE));
+      const baseDiffDays = Math.max(
+        0,
+        Math.floor(
+          (todayLocalMidnight.getTime() - baselineDateLocal.getTime()) /
+            86400000
+        )
+      );
+      const baselineWithDays = {
+        calories: STREAK_BASE.calories + baseDiffDays,
+        typing: STREAK_BASE.typing + baseDiffDays,
+        pushups: STREAK_BASE.pushups + baseDiffDays,
+        commits: STREAK_BASE.commits + baseDiffDays,
+      };
+
       const raw = globalThis.localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw) as {
@@ -150,10 +169,10 @@ export default function FinderWindow({ window }: FinderWindowProps) {
         if (!prevRaw || isNaN(prev.getTime())) {
           // Normalize stored object to include a valid lastUpdated without altering counts
           const normalized = {
-            calories: parsed.calories ?? 1005,
-            typing: parsed.typing ?? 180,
-            pushups: parsed.pushups ?? 410,
-            commits: parsed.commits ?? 150,
+            calories: parsed.calories ?? baselineWithDays.calories,
+            typing: parsed.typing ?? baselineWithDays.typing,
+            pushups: parsed.pushups ?? baselineWithDays.pushups,
+            commits: parsed.commits ?? baselineWithDays.commits,
             lastUpdated: todayLocalMidnight.toISOString(),
           };
           setStreaks({
@@ -192,10 +211,10 @@ export default function FinderWindow({ window }: FinderWindowProps) {
         }
       } else {
         const initial = {
-          calories: 1005,
-          typing: 180,
-          pushups: 410,
-          commits: 150,
+          calories: baselineWithDays.calories,
+          typing: baselineWithDays.typing,
+          pushups: baselineWithDays.pushups,
+          commits: baselineWithDays.commits,
           lastUpdated: todayLocalMidnight.toISOString(),
         };
         setStreaks(initial);
