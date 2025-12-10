@@ -223,7 +223,7 @@ export default function FinderWindow({ window }: FinderWindowProps) {
     } catch {
       // Ignore storage errors
     }
-  }, []);
+  }, [STREAK_BASE, STREAK_BASE_DATE]);
 
   useEffect(() => {
     if (window.content === "projects") {
